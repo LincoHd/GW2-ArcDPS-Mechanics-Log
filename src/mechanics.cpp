@@ -760,6 +760,7 @@ std::vector<Mechanic>& getMechanics()
 		//Harvest Temple
 		Mechanic().setName("received Void debuff").setIds({64524}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Void").setIds({66566}).setBoss(&boss_the_dragonvoid),
+<<<<<<< HEAD
 		Mechanic().setName("hit by Jormag breath").setDescription("Rays of ice streak the platform dealing low damage and chills player hit.").setIds({65517, 66216, 67607}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Primordus Slam").setDescription("Lava Slam which deals massive damage often downstate player.").setIds({64527}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Crystal Barrage").setDescription("Launched Crystal which deal heavy damage and knockback").setIds({66790}).setBoss(&boss_the_dragonvoid),
@@ -809,6 +810,22 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked down by Tackle").setSpecialRequirement(requirementSpecificBoss).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
+=======
+		Mechanic().setName("hit by Jormag breath").setIds({65517, 66216, 67607}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Primordus Slam").setIds({64527}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Crystal Barrage").setIds({66790}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Kralkatorrik Beam").setIds({65017}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Modremoth Shockwave").setIds({64810}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Zhaitan Scream").setIds({66658}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Whirlpool").setIds({65252}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Soo-Won Tsunami").setIds({64748, 66489}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
+
+		// Ura
+		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
+		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
+>>>>>>> 1678a3e (Add Ura bloodstone mechanics)
 	};
 	return *mechanics;
 }
