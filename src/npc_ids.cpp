@@ -61,8 +61,8 @@ Boss boss_adina = Boss().setIds({ 22006 }).setTimer(8 * 60 * 1000).setHealth(226
 Boss boss_sabir = Boss().setIds({ 21964 }).setHealth(29493000).setName("Sabir");
 Boss boss_qadim2 = Boss().setIds({ 22000 }).setTimer(12 * 60 * 1000).setHealth(47188800).setName("Qadim the Peerless");
 //W8
-Boss boss_greer = Boss().setIds({ 26725, 26742, 26771, 26859}).setTimer(10 * 60 * 1000).setHealth(47188000).setName("Godspoil Greer");
-Boss boss_ura = Boss().setIds({ 26712 }).setTimer(10 * 60 * 1000).setHealth(61345440).setName("Ura the Steamshrieker");
+Boss boss_greer = Boss().setIds({ 26725, 26742, 26771, 26859}).setTimer(10 * 60 * 1000).setHealth(47188000).setName("Greer, the Blightbringer");
+Boss boss_ura = Boss().setIds({ 26712 }).setTimer(10 * 60 * 1000).setHealth(61345440).setName("Ura, the Steamshrieker");
 
 //FOTM
 Boss boss_fotm_generic = Boss().setName("FotM Generic");

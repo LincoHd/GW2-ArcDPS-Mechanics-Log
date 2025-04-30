@@ -121,7 +121,10 @@ const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C = 53093;//Incineration Orb
 const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 
 //Greer
-const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION = 74867; //Wave of Corruption
+const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
+const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_B = 75417; //Wave of Corruption 
+const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_A = 75089; //Blob of Blight Greer
+const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_B = 74881; //Blob of Blight 
 
 //Ura
 const uint32_t MECHANIC_URA_DETERRENCE = 75075;
