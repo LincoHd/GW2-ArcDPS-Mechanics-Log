@@ -795,6 +795,11 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("was hit from Chorus of Thunder more then once").setDescription("Also called orange AoEs. Getting hit from it more then once often downstate you and gives an exposed stack in challenge mode").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
 		Mechanic().setName("was knocked back").setDescription("Decima Seismic Crash knocks back if not dodged or negated with aegis or stability").setIsInterupt(true).setIds({MECHANIC_DECIMA_SEISMIC_CRASH_A, MECHANIC_DECIMA_SEISMIC_CRASH_B}).setBoss(&boss_decima),
 		
+		//Decima
+		Mechanic().setName( "got exposed buff").setIds({MECHANIC_DECIMA_EXPOSED, 75523}).setBoss(&boss_decima),
+		Mechanic().setName( "Fluxance").setIds({75155, 75450, 75854}).setBoss(&boss_decima),
+		//Mechanic().setName( "Fulisade").setIds({75954}).setBoss(&boss_decima),
+		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
