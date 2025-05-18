@@ -131,6 +131,9 @@ const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_C = 75688;
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_A = 75873; //Cage of Decay Greer
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_B = 75554; //Cage of Decay Gree
 
+//Decima
+const uint32_t MECHANIC_DECIMA_EXPOSED = 64936; //Exposed (Player)
+
 //Ura
 const uint32_t MECHANIC_URA_DETERRENCE = 75075;
 const uint32_t MECHANIC_URA_BLOODSTONE_SATURATION = 75056;

@@ -698,6 +698,11 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Ripples of Rot").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C}).setBoss(&boss_greer),
 		Mechanic().setName( "hit by Cage of Decay").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B}).setBoss(&boss_greer),
 		
+		//Decima
+		Mechanic().setName( "got exposed buff").setIds({MECHANIC_DECIMA_EXPOSED, 75523}).setBoss(&boss_decima),
+		Mechanic().setName( "Fluxance").setIds({75155, 75450, 75854}).setBoss(&boss_decima),
+		//Mechanic().setName( "Fulisade").setIds({75954}).setBoss(&boss_decima),
+		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
