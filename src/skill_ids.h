@@ -125,6 +125,11 @@ const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_B = 75417; //Wave of Corruption 
 const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_A = 75089; //Blob of Blight Greer
 const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_B = 74881; //Blob of Blight 
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_A = 75456; 
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_B = 75519; //Ripples of Rot Greer
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_C = 75688;
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_A = 75873; //Cage of Decay Greer
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_B = 75554; //Cage of Decay Gree
 
 //Ura
 const uint32_t MECHANIC_URA_DETERRENCE = 75075;
