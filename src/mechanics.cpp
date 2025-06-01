@@ -692,7 +692,13 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
-		// Ura
+		//Greer
+		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A, MECHANIC_GREER_WAVE_OF_CORRUPTION_B }).setBoss(&boss_greer),
+		Mechanic().setName("hit by Blob of Blight").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
+		Mechanic().setName("hit by Ripples of Rot").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C}).setBoss(&boss_greer),
+		Mechanic().setName( "hit by Cage of Decay").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B}).setBoss(&boss_greer),
+		
+		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
 	};
