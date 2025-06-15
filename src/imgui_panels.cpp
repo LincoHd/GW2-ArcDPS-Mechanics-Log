@@ -38,6 +38,11 @@ void AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Track
 
 	std::lock_guard<std::mutex> lg(tracker->log_events_mtx);
 
+	for (auto current_event = tracker->logsstring.begin(); current_event != tracker->logsstring.end(); ++current_event)
+	{
+		ImGui::TextUnformatted(current_event->c_str());
+	}
+	
 	for (auto current_event = tracker->log_events.begin(); current_event != tracker->log_events.end(); ++current_event)
 	{
 		if (current_event->player

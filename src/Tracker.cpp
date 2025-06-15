@@ -143,6 +143,7 @@ void Tracker::clearLog()
 	std::lock_guard<std::mutex> lg(log_events_mtx);
 
 	log_events.clear();
+	logsstring.clear();
 	has_logged_mechanic = false;
 }
 
