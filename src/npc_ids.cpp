@@ -243,7 +243,7 @@ std::list<Boss*> bosses =
     &boss_the_dragonvoid,
     &boss_watchknight_triumvirate,
 	&boss_greer,
+    &boss_ura
 	&boss_decima,
-    &boss_ura,
 	&boss_kela_seneschal_of_waves
 };
