@@ -124,6 +124,7 @@ const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Single or Double?
 const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single or Double?
 const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_Insatiable = 70253; //Orb Collected Buff
 
 //Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer

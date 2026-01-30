@@ -743,6 +743,7 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Envious Gaze (Wall A)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A}).setBoss(&boss_cerus),
 		Mechanic().setName("hit by Envious Gaze (Wall B)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B}).setBoss(&boss_cerus),
 		Mechanic().setName("hit by Envious Gaze (Wall C)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("Orb collected").setFailIfHit(false).setIds({MECHANIC_CERUS_Insatiable}).setBoss(&boss_cerus),
 		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
