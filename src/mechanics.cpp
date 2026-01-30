@@ -692,6 +692,11 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
+		//Cerus
+		Mechanic().setName("hit by Envious Gaze (Wall A)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by Envious Gaze (Wall B)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by Envious Gaze (Wall C)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A, MECHANIC_GREER_WAVE_OF_CORRUPTION_B }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Blob of Blight").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),

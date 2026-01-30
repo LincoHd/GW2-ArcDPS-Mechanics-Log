@@ -143,6 +143,26 @@ Boss boss_watchknight_triumvirate = Boss()
                                             25423,
                                         });
 
+//Soto Strike Mission
+Boss boss_cerus = Boss()
+						.setName("Cerus")
+						.setIds({
+							//Cerus
+							25989,
+							//Embodiment of Gluttony
+							25677,
+							//Embodiment of Rage
+							25686,
+							//Embodiment of Malice
+							25700,
+							//Embodiment of Envy
+							25967,
+							//Embodiment of Despair
+							26034,
+							//Embodiment of Regret
+							26049,
+						});
+
 std::list<Boss*> bosses =
 {
 	&boss_generic,
@@ -183,6 +203,7 @@ std::list<Boss*> bosses =
     &boss_mai_trin,
     &boss_ankka,
     &boss_minister_li,
+	&boss_cerus,
     &boss_the_dragonvoid,
     &boss_watchknight_triumvirate,
 	&boss_greer,

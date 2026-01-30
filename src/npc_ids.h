@@ -100,4 +100,7 @@ extern Boss boss_minister_li;
 extern Boss boss_the_dragonvoid;
 extern Boss boss_watchknight_triumvirate;
 
+//Soto Strike Missions
+extern Boss boss_cerus;
+
 extern std::list<Boss*> bosses;
