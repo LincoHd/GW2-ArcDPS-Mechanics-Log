@@ -120,6 +120,11 @@ const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_B = 52673;//Incineration Orb
 const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C = 53093;//Incineration Orb
 const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 
+//Cerus
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Single or Double?
+
 //Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
 const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_A = 75089; //Blob of Blight Greer
