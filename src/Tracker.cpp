@@ -226,6 +226,17 @@ void Tracker::processCombatEnter(const cbtevent* ev, ag* new_agent)
 			}
 		}
 	}
+
+	if (!boss_data && new_agent)
+	{
+		for (auto current_boss = bosses.begin(); current_boss != bosses.end(); ++current_boss)
+		{
+			if ((*current_boss)->hasId(new_agent->prof))
+			{
+				boss_data = *current_boss;
+			}
+		}
+	}
 }
 
 void Tracker::processCombatExit(const cbtevent* ev, ag* new_agent)
@@ -248,17 +259,6 @@ void Tracker::processCombatExit(const cbtevent* ev, ag* new_agent)
 
 void Tracker::processLogNpcUpdate(uint64_t species_id)
 {
-	if (!boss_data)
-	{
-
-		for (auto current_boss = bosses.begin(); current_boss != bosses.end(); ++current_boss)
-		{
-			if ((*current_boss)->hasId(species_id))
-			{
-				boss_data = *current_boss;
-			}
-		}
-	}
 	current_log_npc = species_id;
 }
 
