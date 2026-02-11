@@ -1,5 +1,7 @@
 #include "mechanics.h"
 
+#include <map>
+
 bool has_logged_mechanic = false;
 
 Mechanic::Mechanic() noexcept
@@ -338,6 +340,44 @@ bool requirementDeimosOil(const Mechanic &current_mechanic, cbtevent* ev, ag* ag
 			return false;
 		}
 	}
+}
+
+bool requirementDecimaExposedFluxance(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player)
+{
+	static std::map<Player*, uint64_t> decima_exposed_fluxance;
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (decima_exposed_fluxance.count(player_dst))
+	{
+		if (decima_exposed_fluxance.at(player_dst) + current_mechanic.frequency_player < ev->time)
+		{
+			decima_exposed_fluxance.at(player_dst) = ev->time;
+			return false;
+		}
+			return true;
+	}
+	decima_exposed_fluxance.insert({player_dst, ev->time});
+	
+	return false;
+}
+
+bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player)
+{
+	static std::map<Player*, uint64_t> decima_exposed_chorusofThunder;
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (decima_exposed_chorusofThunder.count(player_dst))
+	{
+		if (decima_exposed_chorusofThunder.at(player_dst) + current_mechanic.frequency_player < ev->time)
+		{
+			decima_exposed_chorusofThunder.at(player_dst) = ev->time;
+			return false;
+		}
+		return true;
+	}
+	decima_exposed_chorusofThunder.insert({player_dst, ev->time});
+	
+	return false;
 }
 
 bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
@@ -704,6 +744,10 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Blob of Blight").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Ripples of Rot").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C}).setBoss(&boss_greer),
 		Mechanic().setName( "hit by Cage of Decay").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B}).setBoss(&boss_greer),
+
+		//Decima
+		Mechanic().setName("got hit by Decima Fluxance, Arrow twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_A,MECHANIC_DECIMA_FLUXLANCE_B, MECHANIC_DECIMA_FLUXLANCE_C, MECHANIC_DECIMA_FLUXLANCE_D, MECHANIC_DECIMA_FLUXLANCE_E, MECHANIC_DECIMA_FLUXLANCE_F, MECHANIC_DECIMA_FLUXLANCE_G, MECHANIC_DECIMA_FLUXLANCE_H}).setSpecialRequirement(requirementDecimaExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName("got hit by Decima Chorus of Thunder, Aoe twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
 		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
