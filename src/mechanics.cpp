@@ -754,6 +754,11 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
 		Mechanic().setName("got hit by Eruption Vent").setIds({MECHANIC_URA_ERUPTION_VENT}).setBoss(&boss_ura),
 		Mechanic().setName("got hit by Sulfuric Eruption").setIds({MECHANIC_URA_SULFURIC_ERUPTION}).setBoss(&boss_ura),
+
+		//Kela
+		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_B}).setSpecialRequirement(requirementBuffApply).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
 }

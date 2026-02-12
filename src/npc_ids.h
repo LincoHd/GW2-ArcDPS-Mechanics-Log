@@ -104,4 +104,7 @@ extern Boss boss_watchknight_triumvirate;
 //Soto Strike Missions
 extern Boss boss_cerus;
 
+//VoE Raid Encounter
+extern Boss boss_kela_seneschal_of_waves;
+
 extern std::list<Boss*> bosses;
