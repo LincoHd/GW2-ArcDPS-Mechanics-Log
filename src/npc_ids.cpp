@@ -163,6 +163,21 @@ Boss boss_cerus = Boss()
 							//Embodiment of Regret
 							26049,
 						});
+//VoE Raid Encounter
+Boss boss_kela_seneschal_of_waves = Boss()
+										  .setName("Kela, Seneschal of Waves")
+										  .setIds({
+										  	//Kela
+										  	27124,
+											//Crocodilian Razortooth
+										  	27655, 27658, 27667,
+										  	//Tornado
+										  	27654,
+										  	//Executor of Waves
+										  	27651,
+										  	//Kela
+										  	27670
+										  });
 
 Boss boss_dagda = Boss()
 						.setName("Dagda")
