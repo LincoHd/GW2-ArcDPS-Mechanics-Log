@@ -759,6 +759,7 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_B}).setSpecialRequirement(requirementBuffApply).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
 }
