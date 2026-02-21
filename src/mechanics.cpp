@@ -733,10 +733,8 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
 		//Cerus
-		Mechanic().setName("hit by Envious Gaze (Wall A)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze (Wall B)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze (Wall C)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze (Wall D)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by double Envious Gaze (double Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by single Envious Gaze (Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
 		
 		//Greer
@@ -758,7 +756,7 @@ std::vector<Mechanic>& getMechanics()
 		//Kela
 		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_B}).setSpecialRequirement(requirementBuffApply).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
