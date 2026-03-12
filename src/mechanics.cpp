@@ -746,6 +746,7 @@ std::vector<Mechanic>& getMechanics()
 		//Decima
 		Mechanic().setName("got hit by Decima Fluxance, Arrow twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_A,MECHANIC_DECIMA_FLUXLANCE_B, MECHANIC_DECIMA_FLUXLANCE_C, MECHANIC_DECIMA_FLUXLANCE_D, MECHANIC_DECIMA_FLUXLANCE_E, MECHANIC_DECIMA_FLUXLANCE_F, MECHANIC_DECIMA_FLUXLANCE_G, MECHANIC_DECIMA_FLUXLANCE_H}).setSpecialRequirement(requirementDecimaExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
 		Mechanic().setName("got hit by Decima Chorus of Thunder, Aoe twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName( "knocked back from Seismic Crash").setIsInterupt(true).setIds({MECHANIC_DECIMA_SEISMIC_CRASH_A, MECHANIC_DECIMA_SEISMIC_CRASH_B}).setBoss(&boss_decima),
 		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
