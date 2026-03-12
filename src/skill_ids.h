@@ -120,6 +120,13 @@ const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_B = 52673;//Incineration Orb
 const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C = 53093;//Incineration Orb
 const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 
+//Cerus
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_Insatiable = 70253; //Orb Collected Buff
+
 //Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_B = 75417; //Wave of Corruption 
@@ -131,12 +138,35 @@ const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_C = 75688;
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_A = 75873; //Cage of Decay Greer
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_B = 75554; //Cage of Decay Greer
 
+//Decima
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_A = 74660; //Decima Arrow sequence fired
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_B =75954; 
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_C = 75880; //Decima Arrow fired at once
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_D = 74702;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_E =74916;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_F =74964;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_G =75098;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_H =75141;
+const uint32_t MECHANIC_DECIMA_CHORUS_OF_THUNDER_A =74641;
+const uint32_t MECHANIC_DECIMA_CHORUS_OF_THUNDER_B = 74706;
+const uint32_t MECHANIC_DECIMA_CHORUS_OF_THUNDER_C = 75523;
+const uint32_t MECHANIC_DECIMA_SEISMIC_CRASH_A = 74653; //Decima Knockback
+const uint32_t MECHANIC_DECIMA_SEISMIC_CRASH_B = 75422;
+
 //Ura
 const uint32_t MECHANIC_URA_DETERRENCE = 75075;
 const uint32_t MECHANIC_URA_BLOODSTONE_SATURATION = 75056;
 const uint32_t MECHANIC_URA_ERUPTION_VENT = 75200;
 const uint32_t MECHANIC_URA_SULFURIC_ERUPTION = 75080;
 
+//Kela
+const uint32_t MECHANIC_KELA_SCALDING_WAVE = 79521;
+const uint32_t MECHANIC_KELA_TORNADO = 79524;
+const uint32_t MECHANIC_KELA_BITING_SWARM_A = 79526; //Damage
+const uint32_t MECHANIC_KELA_BITING_SWARM_B = 79513; //Apply Buff
+const uint32_t MECHANIC_KELA_LIGHTNING_STRIKE = 79448;
+
+//Fractal
 const uint32_t MECHANIC_FOTM_AGONY = 15773;//Agony
 const uint32_t MECHANIC_FOTM_SOCIAL_AWKWARDNESS = 33475;//Social Awkwardness
 const uint32_t MECHANIC_FOTM_FLUX_BOMB = 37695;//unnamed

@@ -70,6 +70,7 @@ extern Boss boss_fotm_generic;
 
 //W8
 extern Boss boss_greer;
+extern Boss boss_decima;
 extern Boss boss_ura;
 
 //Nightmare
@@ -99,5 +100,11 @@ extern Boss boss_ankka;
 extern Boss boss_minister_li;
 extern Boss boss_the_dragonvoid;
 extern Boss boss_watchknight_triumvirate;
+
+//Soto Strike Missions
+extern Boss boss_cerus;
+
+//VoE Raid Encounter
+extern Boss boss_kela_seneschal_of_waves;
 
 extern std::list<Boss*> bosses;

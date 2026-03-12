@@ -1,5 +1,7 @@
 #include "mechanics.h"
 
+#include <map>
+
 bool has_logged_mechanic = false;
 
 Mechanic::Mechanic() noexcept
@@ -338,6 +340,44 @@ bool requirementDeimosOil(const Mechanic &current_mechanic, cbtevent* ev, ag* ag
 			return false;
 		}
 	}
+}
+
+bool requirementDecimaExposedFluxance(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player)
+{
+	static std::map<Player*, uint64_t> decima_exposed_fluxance;
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (decima_exposed_fluxance.count(player_dst))
+	{
+		if (decima_exposed_fluxance.at(player_dst) + current_mechanic.frequency_player < ev->time)
+		{
+			decima_exposed_fluxance.at(player_dst) = ev->time;
+			return false;
+		}
+			return true;
+	}
+	decima_exposed_fluxance.insert({player_dst, ev->time});
+	
+	return false;
+}
+
+bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player)
+{
+	static std::map<Player*, uint64_t> decima_exposed_chorusofThunder;
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (decima_exposed_chorusofThunder.count(player_dst))
+	{
+		if (decima_exposed_chorusofThunder.at(player_dst) + current_mechanic.frequency_player < ev->time)
+		{
+			decima_exposed_chorusofThunder.at(player_dst) = ev->time;
+			return false;
+		}
+		return true;
+	}
+	decima_exposed_chorusofThunder.insert({player_dst, ev->time});
+	
+	return false;
 }
 
 bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
@@ -692,17 +732,33 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
+		//Cerus
+		Mechanic().setName("hit by double Envious Gaze (double Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by single Envious Gaze (Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
+		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
+		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A, MECHANIC_GREER_WAVE_OF_CORRUPTION_B }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Blob of Blight").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Ripples of Rot").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C}).setBoss(&boss_greer),
 		Mechanic().setName( "hit by Cage of Decay").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B}).setBoss(&boss_greer),
+
+		//Decima
+		Mechanic().setName("got hit by Decima Fluxance, Arrow twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_A,MECHANIC_DECIMA_FLUXLANCE_B, MECHANIC_DECIMA_FLUXLANCE_C, MECHANIC_DECIMA_FLUXLANCE_D, MECHANIC_DECIMA_FLUXLANCE_E, MECHANIC_DECIMA_FLUXLANCE_F, MECHANIC_DECIMA_FLUXLANCE_G, MECHANIC_DECIMA_FLUXLANCE_H}).setSpecialRequirement(requirementDecimaExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName("got hit by Decima Chorus of Thunder, Aoe twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName( "knocked back from Seismic Crash").setIsInterupt(true).setIds({MECHANIC_DECIMA_SEISMIC_CRASH_A, MECHANIC_DECIMA_SEISMIC_CRASH_B}).setBoss(&boss_decima),
 		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
 		Mechanic().setName("got hit by Eruption Vent").setIds({MECHANIC_URA_ERUPTION_VENT}).setBoss(&boss_ura),
 		Mechanic().setName("got hit by Sulfuric Eruption").setIds({MECHANIC_URA_SULFURIC_ERUPTION}).setBoss(&boss_ura),
+
+		//Kela
+		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
 }

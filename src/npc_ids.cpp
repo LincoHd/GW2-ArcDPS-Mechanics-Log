@@ -62,6 +62,7 @@ Boss boss_sabir = Boss().setIds({ 21964 }).setHealth(29493000).setName("Sabir");
 Boss boss_qadim2 = Boss().setIds({ 22000 }).setTimer(12 * 60 * 1000).setHealth(47188800).setName("Qadim the Peerless");
 //W8
 Boss boss_greer = Boss().setIds({ 26725, 26742, 26771, 26859}).setTimer(10 * 60 * 1000).setHealth(47188000).setName("Greer, the Blightbringer");
+Boss boss_decima = Boss().setIds({26867, 26856}).setTimer(10 * 60 * 1000).setHealth(97020176).setName("Decima, the Stormsinger");
 Boss boss_ura = Boss().setIds({ 26712 }).setTimer(10 * 60 * 1000).setHealth(61345440).setName("Ura, the Steamshrieker");
 
 //FOTM
@@ -143,6 +144,41 @@ Boss boss_watchknight_triumvirate = Boss()
                                             25423,
                                         });
 
+//Soto Strike Mission
+Boss boss_cerus = Boss()
+						.setName("Cerus")
+						.setIds({
+							//Cerus
+							25989,
+							//Embodiment of Gluttony
+							25677,
+							//Embodiment of Rage
+							25686,
+							//Embodiment of Malice
+							25700,
+							//Embodiment of Envy
+							25967,
+							//Embodiment of Despair
+							26034,
+							//Embodiment of Regret
+							26049,
+						});
+//VoE Raid Encounter
+Boss boss_kela_seneschal_of_waves = Boss()
+										  .setName("Kela, Seneschal of Waves")
+										  .setIds({
+										  	//Kela
+										  	27124,
+											//Crocodilian Razortooth
+										  	27655, 27658, 27667,
+										  	//Tornado
+										  	27654,
+										  	//Executor of Waves
+										  	27651,
+										  	//Kela
+										  	27670
+										  });
+
 std::list<Boss*> bosses =
 {
 	&boss_generic,
@@ -183,8 +219,11 @@ std::list<Boss*> bosses =
     &boss_mai_trin,
     &boss_ankka,
     &boss_minister_li,
+	&boss_cerus,
     &boss_the_dragonvoid,
     &boss_watchknight_triumvirate,
 	&boss_greer,
-    &boss_ura
+	&boss_decima,
+    &boss_ura,
+	&boss_kela_seneschal_of_waves
 };
