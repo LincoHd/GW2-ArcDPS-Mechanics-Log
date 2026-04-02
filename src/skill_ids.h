@@ -121,10 +121,10 @@ const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C = 53093;//Incineration Orb
 const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 
 //Cerus
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Single or Double?
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single or Double?
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Single or Double?
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Double
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single 
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Double
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single
 const uint32_t MECHANIC_CERUS_Insatiable = 70253; //Orb Collected Buff
 
 //Dagda
