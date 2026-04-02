@@ -127,6 +127,16 @@ const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Single or Double?
 const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single or Double?
 const uint32_t MECHANIC_CERUS_Insatiable = 70253; //Orb Collected Buff
 
+//Dagda
+const uint32_t MECHANIC_DAGDA_SOULFEAST = 70567; //Soul Feast
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_1 = 65869; //Numbers
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_2 = 65088;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_3 = 64377;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_4 = 64999;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_5 = 65717;
+const uint32_t MECHANIC_DAGDA_DEMONIC_BLAST = 71082; //Cone Aoes Blast
+const uint32_t MECHANIC_DAGDA_SHARED_DESTRUCTION = 70182; //Meteor Crash Green Aoe Target.
+
 //Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
 const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_A = 75089; //Blob of Blight Greer
@@ -228,3 +238,4 @@ const uint32_t BUFF_VAPOR_FORM = 5620;//Vapor Form
 const uint32_t BUFF_ILLUSION_OF_LIFE = 10346;//Illusion of Life
 const uint32_t BUFF_CRYSTALLINE_HEART = 37657;//Crystalline Heart, for envoy armor 2 collection
 const uint32_t BUFF_GENERIC_KNOCKDOWN = 23294 ; //Knockdown, used for Kela Crocodiles
+const uint32_t BUFF_REVEALED = 890; //Revealed

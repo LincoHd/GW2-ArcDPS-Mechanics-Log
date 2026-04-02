@@ -409,6 +409,17 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 	return true;
 }
 
+bool requirementFromBoss(const Mechanic& current_mechanic, cbtevent* ev,
+							   ag* ag_src, ag* ag_dst, Player* player_src,
+							   Player* player_dst, Player* current_player)
+{
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (!ag_src) return false;
+	uint32_t sourceId = ag_src->id;
+	return current_mechanic.boss->hasId(sourceId);
+}
+
 bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
                              ag* ag_src, ag* ag_dst, Player* player_src,
                              Player* player_dst, Player* current_player)
@@ -745,6 +756,12 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Envious Gaze (Wall C)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
 		Mechanic().setName("hit by Envious Gaze (Wall D)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
+
+		//Dagda
+		Mechanic().setName("got targeted by Soul Feast").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
+		Mechanic().setName("got targeted by Charging Constellation (Numbers)").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
+		Mechanic().setName("hit by Demonic Blast (Cone AoE)").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
+		Mechanic().setName(("got targeted by Shared Destruction (Meteor Crash Green AoE)")).setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
 		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
