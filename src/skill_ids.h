@@ -184,9 +184,11 @@ const uint32_t MECHANIC_URA_SULFURIC_ERUPTION = 75080;
 //Kela
 const uint32_t MECHANIC_KELA_SCALDING_WAVE = 79521;
 const uint32_t MECHANIC_KELA_TORNADO = 79524;
-const uint32_t MECHANIC_KELA_BITING_SWARM_A = 79526; //Damage
-const uint32_t MECHANIC_KELA_BITING_SWARM_B = 79513; //Apply Buff
+const uint32_t MECHANIC_KELA_BITING_SWARM_A = 79526; //Buff
+const uint32_t MECHANIC_KELA_BITING_SWARM_B = 79513; //Hidden, Effect and Screenborder
 const uint32_t MECHANIC_KELA_LIGHTNING_STRIKE = 79448;
+const uint32_t MECHANIC_KELA_TACKLE = 79443; //Crocs Jump
+const uint32_t MECHANIC_KELA_HUNTED = 79470; //Crocs Fixated
 
 //Fractal
 const uint32_t MECHANIC_FOTM_AGONY = 15773;//Agony
@@ -225,3 +227,4 @@ const uint32_t BUFF_STABILITY = 1122;//Stability
 const uint32_t BUFF_VAPOR_FORM = 5620;//Vapor Form
 const uint32_t BUFF_ILLUSION_OF_LIFE = 10346;//Illusion of Life
 const uint32_t BUFF_CRYSTALLINE_HEART = 37657;//Crystalline Heart, for envoy armor 2 collection
+const uint32_t BUFF_GENERIC_KNOCKDOWN = 23294 ; //Knockdown, used for Kela Crocodiles
