@@ -103,6 +103,7 @@ extern Boss boss_watchknight_triumvirate;
 
 //Soto Strike Missions
 extern Boss boss_cerus;
+extern Boss boss_dagda;
 
 //VoE Raid Encounter
 extern Boss boss_kela_seneschal_of_waves;
