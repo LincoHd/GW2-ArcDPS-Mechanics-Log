@@ -163,6 +163,24 @@ Boss boss_cerus = Boss()
 							//Embodiment of Regret
 							26049,
 						});
+
+Boss boss_dagda = Boss()
+						.setName("Dagda")
+						.setIds({
+							//Dagda
+							25705,
+							//Veteran Tormented Phantom
+							25604,
+							//Champion The Tormented
+							25623,
+							//Elite The Tormented
+							26000,
+							//The Tormented
+							26016,
+							//Soul Feast
+							26069,
+						});
+
 //VoE Raid Encounter
 Boss boss_kela_seneschal_of_waves = Boss()
 										  .setName("Kela, Seneschal of Waves")
