@@ -380,6 +380,25 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 	return false;
 }
 
+bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+{
+	static KelaBees kela_bees;
+	std::string mechanic_name = "Bee Second";
+	if (!ev) return false;
+	//First Bees ever
+	if (kela_bees.first_touch_time == 0)
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	if ((ev->time - kela_bees.first_touch_time) > current_mechanic.frequency_player) 
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	return false;
+}
+
 bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return ev->src_instid == ev->dst_instid;
@@ -757,6 +776,7 @@ std::vector<Mechanic>& getMechanics()
 		//Kela
 		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got first Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
 	};
