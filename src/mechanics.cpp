@@ -380,6 +380,25 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 	return false;
 }
 
+bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+{
+	static KelaBees kela_bees;
+	std::string mechanic_name = "Bee Second";
+	if (!ev) return false;
+	//First Bees ever
+	if (kela_bees.first_touch_time == 0)
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	if ((ev->time - kela_bees.first_touch_time) > current_mechanic.frequency_player) 
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	return false;
+}
+
 bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return ev->src_instid == ev->dst_instid;
@@ -400,6 +419,17 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 	// Applying buff
 	if (!ev->buff || ev->buff_dmg != 0) return false;
 	return true;
+}
+
+bool requirementFromBoss(const Mechanic& current_mechanic, cbtevent* ev,
+							   ag* ag_src, ag* ag_dst, Player* player_src,
+							   Player* player_dst, Player* current_player)
+{
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (!ag_src) return false;
+	uint32_t sourceId = ag_src->id;
+	return current_mechanic.boss->hasId(sourceId);
 }
 
 bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
@@ -736,6 +766,12 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by double Envious Gaze (double Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
 		Mechanic().setName("hit by single Envious Gaze (Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
+
+		//Dagda
+		Mechanic().setName("got targeted by Soul Feast").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
+		Mechanic().setName("got targeted by Charging Constellation (Numbers)").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
+		Mechanic().setName("hit by Demonic Blast (Cone AoE)").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
+		Mechanic().setName(("got targeted by Shared Destruction (Meteor Crash Green AoE)")).setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
 		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A, MECHANIC_GREER_WAVE_OF_CORRUPTION_B }).setBoss(&boss_greer),
@@ -757,8 +793,11 @@ std::vector<Mechanic>& getMechanics()
 		//Kela
 		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got Biting Swarm (Bees)").setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got first Biting Swarm").setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm").setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked down by Tackle").setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
 }

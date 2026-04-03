@@ -121,11 +121,21 @@ const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C = 53093;//Incineration Orb
 const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 
 //Cerus
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Single or Double?
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single or Double?
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Single or Double?
-const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single or Double?
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Double
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single 
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Double
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single
 const uint32_t MECHANIC_CERUS_Insatiable = 70253; //Orb Collected Buff
+
+//Dagda
+const uint32_t MECHANIC_DAGDA_SOULFEAST = 70567; //Soul Feast
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_1 = 65869; //Numbers
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_2 = 65088;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_3 = 64377;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_4 = 64999;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_5 = 65717;
+const uint32_t MECHANIC_DAGDA_DEMONIC_BLAST = 71082; //Cone Aoes Blast
+const uint32_t MECHANIC_DAGDA_SHARED_DESTRUCTION = 70182; //Meteor Crash Green Aoe Target.
 
 //Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
@@ -162,9 +172,11 @@ const uint32_t MECHANIC_URA_SULFURIC_ERUPTION = 75080;
 //Kela
 const uint32_t MECHANIC_KELA_SCALDING_WAVE = 79521;
 const uint32_t MECHANIC_KELA_TORNADO = 79524;
-const uint32_t MECHANIC_KELA_BITING_SWARM_A = 79526; //Damage
-const uint32_t MECHANIC_KELA_BITING_SWARM_B = 79513; //Apply Buff
+const uint32_t MECHANIC_KELA_BITING_SWARM_A = 79526; //Buff
+const uint32_t MECHANIC_KELA_BITING_SWARM_B = 79513; //Hidden, Effect and Screenborder
 const uint32_t MECHANIC_KELA_LIGHTNING_STRIKE = 79448;
+const uint32_t MECHANIC_KELA_TACKLE = 79443; //Crocs Jump
+const uint32_t MECHANIC_KELA_HUNTED = 79470; //Crocs Fixated
 
 //Fractal
 const uint32_t MECHANIC_FOTM_AGONY = 15773;//Agony
@@ -203,3 +215,5 @@ const uint32_t BUFF_STABILITY = 1122;//Stability
 const uint32_t BUFF_VAPOR_FORM = 5620;//Vapor Form
 const uint32_t BUFF_ILLUSION_OF_LIFE = 10346;//Illusion of Life
 const uint32_t BUFF_CRYSTALLINE_HEART = 37657;//Crystalline Heart, for envoy armor 2 collection
+const uint32_t BUFF_GENERIC_KNOCKDOWN = 23294 ; //Knockdown, used for Kela Crocodiles
+const uint32_t BUFF_REVEALED = 890; //Revealed
