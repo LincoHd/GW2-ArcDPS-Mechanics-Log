@@ -763,15 +763,16 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
 		//Cerus
-		Mechanic().setName("hit by double Envious Gaze (double Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by single Envious Gaze (Wall)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by empowered Envious Gaze").setDescription("Empowered Wall of Cerus or his Add").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by Envious Gaze").setDescription("Normal Wall of Cerus or his Add").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
 
 		//Dagda
-		Mechanic().setName("got targeted by Soul Feast").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
-		Mechanic().setName("got targeted by Charging Constellation (Numbers)").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
-		Mechanic().setName("hit by Demonic Blast (Cone AoE)").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
-		Mechanic().setName(("got targeted by Shared Destruction (Meteor Crash Green AoE)")).setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Soul Feast").setDescription("Players struck by this are inflicted with Infirmity and Residual Anxiety").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Charging Constellation").setDescription("Also known as Numbers, oversight of the people target by 1-5 Number").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
+		Mechanic().setName("hit by Demonic Blast").setDescription("Also known as Pizza/Cones, a eight cone-shaped AoEs which radiate from Dagda, getting hit applies Debilitate and Residual Anxiety").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Meteor Crash").setDescription("Green Aoes where at least 3 Players need to be present. Skill and damage from it is called Meteor Crash, but game maps it ingame to Shared Destruction").setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
+		Mechanic().setName("Lost Control").setDescription("Player had 10 Stacks of Residual Anixety, was unfriendly and lost control").setIds({MECHANIC_DAGDA_LOST_CONTROL_BUFF}).setBoss(&boss_dagda),
 		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A, MECHANIC_GREER_WAVE_OF_CORRUPTION_B }).setBoss(&boss_greer),
