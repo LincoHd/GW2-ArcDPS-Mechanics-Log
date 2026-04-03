@@ -125,6 +125,8 @@ struct DeimosOil
 	uint64_t last_touch_time = 0;
 };
 
+bool requirementCMExposedFluxance(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
+
 bool requirementDecimaExposedFluxance(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
 
 bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player);

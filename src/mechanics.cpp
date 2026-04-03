@@ -342,6 +342,13 @@ bool requirementDeimosOil(const Mechanic &current_mechanic, cbtevent* ev, ag* ag
 	}
 }
 
+bool requirementCMExposedFluxance(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player)
+{
+	if (!ev) return false;
+	if (!player_dst) return false;
+	return current_mechanic.boss->hasId(26867) && requirementDecimaExposedFluxance(current_mechanic, ev, ag_src, ag_dst, player_src, player_dst, current_player); //Checking for CM Decima and then checking for double Arrow hit.
+}
+
 bool requirementDecimaExposedFluxance(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player)
 {
 	static std::map<Player*, uint64_t> decima_exposed_fluxance;
@@ -733,20 +740,22 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
 		//Greer
-		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A, MECHANIC_GREER_WAVE_OF_CORRUPTION_B }).setBoss(&boss_greer),
-		Mechanic().setName("hit by Blob of Blight").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
-		Mechanic().setName("hit by Ripples of Rot").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C}).setBoss(&boss_greer),
-		Mechanic().setName( "hit by Cage of Decay").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B}).setBoss(&boss_greer),
-
+		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
+		Mechanic().setName("was targeted by Blob of Blight").setDescription("Fokus Target of an orb").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_TARGET}).setBoss(&boss_greer),
+		Mechanic().setName("hit by Blob of Blight").setDescription("Often also called orbs, getting hit from hit can be deadly. Also counting all the little orbs from the big orbs").setVerbosity(verbosity_chart).setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
+		Mechanic().setName("hit by Ripples of Rot").setDescription("Jump from Greer or Gree, the Bringer which in challenge Mode applies Plageu Rot (Red Player Aoes)").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C, MECHANIC_GREER_RIPPLES_OF_ROT_D, MECHANIC_GREER_RIPPLES_OF_ROT_E}).setBoss(&boss_greer),
+		Mechanic().setName("hit by Cage of Decay").setIsInterupt(true).setDescription("Fan of 5 arrows with an circle at the end. Rippling thorn barriers travel along these lines, damaging and knocking back anything struck by them").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B, MECHANIC_GREER_CAGE_OF_DECAY_C, MECHANIC_GREER_CAGE_OF_DECAY_D, MECHANIC_GREER_CAGE_OF_DECAY_E}).setBoss(&boss_greer),
 		//Decima
-		Mechanic().setName("got hit by Decima Fluxance, Arrow twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_A,MECHANIC_DECIMA_FLUXLANCE_B, MECHANIC_DECIMA_FLUXLANCE_C, MECHANIC_DECIMA_FLUXLANCE_D, MECHANIC_DECIMA_FLUXLANCE_E, MECHANIC_DECIMA_FLUXLANCE_F, MECHANIC_DECIMA_FLUXLANCE_G, MECHANIC_DECIMA_FLUXLANCE_H}).setSpecialRequirement(requirementDecimaExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
-		Mechanic().setName("got hit by Decima Chorus of Thunder, Aoe twice").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName("was hit twice from Fluxlance").setDescription("Fluxlance Fusillade ingame, also called Arrows. Getting hit by it twice in challenge mode gives you an exposed stack.").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_A, MECHANIC_DECIMA_FLUXLANCE_B}).setSpecialRequirement(requirementCMExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName("was hit twice from Fluxlance").setDescription("Fluxlance Fusillade ingame, also called Arrows. Getting hit by it twice can downstate you in normal mode and gives you an exposed stack in challenge mode").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_C, MECHANIC_DECIMA_FLUXLANCE_D, MECHANIC_DECIMA_FLUXLANCE_E, MECHANIC_DECIMA_FLUXLANCE_F, MECHANIC_DECIMA_FLUXLANCE_G, MECHANIC_DECIMA_FLUXLANCE_H}).setSpecialRequirement(requirementDecimaExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName("was hit from Chorus of Thunder more then once").setDescription("Also called orange AoEs. Getting hit from it more then once often downstate you and gives an exposed stack in challenge mode").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
+		Mechanic().setName("was knocked back").setDescription("Decima Seismic Crash knocks back if not dodged or negated with aegis or stability").setIsInterupt(true).setIds({MECHANIC_DECIMA_SEISMIC_CRASH_A, MECHANIC_DECIMA_SEISMIC_CRASH_B}).setBoss(&boss_decima),
 		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
-		Mechanic().setName("got hit by Eruption Vent").setIds({MECHANIC_URA_ERUPTION_VENT}).setBoss(&boss_ura),
-		Mechanic().setName("got hit by Sulfuric Eruption").setIds({MECHANIC_URA_SULFURIC_ERUPTION}).setBoss(&boss_ura),
+		Mechanic().setName("was hit by Eruption Vent").setDescription("Shockwave from a spawned Sulfuric Geysire, mostly interesting for Hopscotch tracking in fight").setIds({MECHANIC_URA_ERUPTION_VENT}).setBoss(&boss_ura),
+		Mechanic().setName("was hit by Sulfuric Eruption").setIds({MECHANIC_URA_SULFURIC_ERUPTION}).setBoss(&boss_ura),
 	};
 	return *mechanics;
 }
