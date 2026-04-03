@@ -74,8 +74,7 @@ void AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Track
 void AppChart::clear(Tracker* tracker)
 {
 	if (!tracker) return;
-
-	tracker->resetAllPlayerStats();
+	tracker->resetChartandLogStats();
 }
 
 void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWindowFlags flags, bool show_all)
