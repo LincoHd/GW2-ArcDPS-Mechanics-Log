@@ -138,6 +138,20 @@ void Tracker::resetAllPlayerStats()
 	players.clear();
 }
 
+void Tracker::resetChartandLogStats()
+{
+	for (PlayerEntry& entry : player_entries)
+	{
+		entry.pulls = 0;
+		entry.entries.clear();
+		entry.mechanics_failed = 0;
+		entry.mechanics_neutral = 0;
+		entry.downs = 0;
+		entry.deaths = 0;
+		entry.last_hit_time = 0;
+	}
+}
+
 void Tracker::clearLog()
 {
 	std::lock_guard<std::mutex> lg(log_events_mtx);

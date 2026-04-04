@@ -131,6 +131,13 @@ bool requirementDecimaExposedFluxance(const Mechanic & current_mechanic, cbteven
 
 bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player);
 
+bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+
+struct KelaBees
+{
+	uint64_t first_touch_time = 0;
+};
+
 bool requirementDeimosOil(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
 
 bool requirementOnSelf(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);

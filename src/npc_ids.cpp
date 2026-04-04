@@ -144,6 +144,59 @@ Boss boss_watchknight_triumvirate = Boss()
                                             25423,
                                         });
 
+//Soto Strike Mission
+Boss boss_cerus = Boss()
+						.setName("Cerus")
+						.setIds({
+							//Cerus
+							25989,
+							//Embodiment of Gluttony
+							25677,
+							//Embodiment of Rage
+							25686,
+							//Embodiment of Malice
+							25700,
+							//Embodiment of Envy
+							25967,
+							//Embodiment of Despair
+							26034,
+							//Embodiment of Regret
+							26049,
+						});
+
+Boss boss_dagda = Boss()
+						.setName("Dagda")
+						.setIds({
+							//Dagda
+							25705,
+							//Veteran Tormented Phantom
+							25604,
+							//Champion The Tormented
+							25623,
+							//Elite The Tormented
+							26000,
+							//The Tormented
+							26016,
+							//Soul Feast
+							26069,
+						});
+
+//VoE Raid Encounter
+Boss boss_kela_seneschal_of_waves = Boss()
+										  .setName("Kela, Seneschal of Waves")
+										  .setIds({
+										  	//Kela
+										  	27124,
+											//Crocodilian Razortooth
+										  	27655, 27658, 27667,
+										  	//Tornado
+										  	27654,
+										  	//Executor of Waves
+										  	27651,
+										  	//Kela
+										  	27670
+										  });
+
 std::list<Boss*> bosses =
 {
 	&boss_generic,
@@ -184,9 +237,12 @@ std::list<Boss*> bosses =
     &boss_mai_trin,
     &boss_ankka,
     &boss_minister_li,
+	&boss_cerus,
+	&boss_dagda,
     &boss_the_dragonvoid,
     &boss_watchknight_triumvirate,
 	&boss_greer,
 	&boss_decima,
-    &boss_ura
+    &boss_ura,
+	&boss_kela_seneschal_of_waves
 };

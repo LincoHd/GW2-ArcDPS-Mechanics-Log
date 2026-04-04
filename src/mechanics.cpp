@@ -387,6 +387,25 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 	return false;
 }
 
+bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+{
+	static KelaBees kela_bees;
+	std::string mechanic_name = "Bee Second";
+	if (!ev) return false;
+	//First Bees ever
+	if (kela_bees.first_touch_time == 0)
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	if ((ev->time - kela_bees.first_touch_time) > current_mechanic.frequency_player) 
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	return false;
+}
+
 bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return ev->src_instid == ev->dst_instid;
@@ -407,6 +426,17 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 	// Applying buff
 	if (!ev->buff || ev->buff_dmg != 0) return false;
 	return true;
+}
+
+bool requirementFromBoss(const Mechanic& current_mechanic, cbtevent* ev,
+							   ag* ag_src, ag* ag_dst, Player* player_src,
+							   Player* player_dst, Player* current_player)
+{
+	if (!ev) return false;
+	if (!player_dst) return false;
+	if (!ag_src) return false;
+	uint32_t sourceId = ag_src->id;
+	return current_mechanic.boss->hasId(sourceId);
 }
 
 bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
@@ -442,9 +472,9 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic("stood in the green circle",{31340,31391,31529,31750},&boss_vg,false,false,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Distributed Magic",""),
 
 		//Gorseval
-		Mechanic().setName("was slammed").setIds({MECHANIC_GORS_SLAM}).setIsInterupt(true).setBoss(&boss_gors),
-		Mechanic().setName("was egged").setIds({MECHANIC_GORS_EGG}).setBoss(&boss_gors),
-		Mechanic().setName("touched an orb").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
+		Mechanic().setName("was slammed").setDescription("Gorseval Spectral Impact which knocks back and applies Torment").setIds({MECHANIC_GORS_SLAM}).setIsInterupt(true).setBoss(&boss_gors),
+		Mechanic().setName("was egged").setDescription("Gorseval Ghastly Prison which encases players in an egg-like prison. To be freed prison need to be destroyed whith damage from special action key or other players.").setIds({MECHANIC_GORS_EGG}).setBoss(&boss_gors),
+		Mechanic().setName("touched an orb").setDescription("Touching an orb gives 10 Stacks Spectral Darkness which reduces outgoing damage, increases incoming damage and reduced health every second, cured by collecting golden collored orbs").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
 		
 		//Sabetha
 		Mechanic().setName("got a sapper bomb").setIds({MECHANIC_SAB_SAPPER_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
@@ -452,12 +482,12 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("stood in cannon fire").setIds({MECHANIC_SAB_CANNON}).setBoss(&boss_sab),
 		//Mechanic().setName("touched the flame wall").setIds({MECHANIC_SAB_FLAMEWALL}).setBoss(&boss_sab),
 
-		//Slothasaur
-		Mechanic().setName("was hit with tantrum").setIds({MECHANIC_SLOTH_TANTRUM}).setBoss(&boss_sloth),
-		Mechanic().setName("got a bomb").setIds({MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000).setBoss(&boss_sloth),
-		Mechanic().setName("stood in bomb aoe").setIds({MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(verbosity_chart).setBoss(&boss_sloth),
+		//Slothasor
+		Mechanic().setName("was hit with tantrum").setDescription("Slothasor creates 3 AoEs under every player which deals damage and knockdown for 5 seconds.").setIds({MECHANIC_SLOTH_TANTRUM}).setBoss(&boss_sloth),
+		Mechanic().setName("was targeted by Volatile Poison").setDescription("An special poison which deals 750 damage per tick and after short time or by pressing the special action key purge leaves a Volatile Poison pool behind").setIds({MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000).setBoss(&boss_sloth),
+		Mechanic().setName("stood in Volatile Poison AoE").setDescription("An slowly expanding AoE which deals massive damage to anyone standing in it. Grows to 900 units and disappears after short time").setIds({MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(verbosity_chart).setBoss(&boss_sloth),
 		Mechanic().setName("was hit by flame breath").setIds({MECHANIC_SLOTH_FLAME_BREATH}).setBoss(&boss_sloth),
-		Mechanic().setName("was hit by shake").setIds({MECHANIC_SLOTH_SHAKE}).setBoss(&boss_sloth),
+		Mechanic().setName("was hit by shake").setDescription("Spore Release from which each projectile applies 5 stacks of Torment, Poison, Bleeding and Burning each.").setIds({MECHANIC_SLOTH_SHAKE}).setBoss(&boss_sloth),
 		Mechanic().setName("is fixated").setIds({MECHANIC_SLOTH_FIXATE}).setFailIfHit(false).setBoss(&boss_sloth),
 
 		//Bandit Trio
@@ -737,8 +767,20 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Whirlpool").setIds({65252}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Soo-Won Tsunami").setIds({64748, 66489}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("was revealed").setDescription("Enemies stop running towards the boss center when a player is revealed.").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
+		//Cerus
+		Mechanic().setName("hit by empowered Envious Gaze").setDescription("Empowered Wall of Cerus or Embodiment of Envy").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by Envious Gaze").setDescription("Normal Wall of Cerus or Embodiment of Envy").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
+		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
+
+		//Dagda
+		Mechanic().setName("targeted by Soul Feast").setDescription("Players struck by this are inflicted with Infirmity and Residual Anxiety").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Charging Constellation").setDescription("Also known as Numbers, oversight of the people target by 1-5 Number").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
+		Mechanic().setName("hit by Demonic Blast").setDescription("Also known as Pizza/Cones, a eight cone-shaped AoEs which radiate from Dagda, getting hit applies Debilitate and Residual Anxiety").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Meteor Crash").setDescription("Green Aoes where at least 3 Players need to be present. Skill and damage from it is called Meteor Crash, but game maps it ingame to Shared Destruction").setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
+		Mechanic().setName("Lost Control").setDescription("Player had 10 Stacks of Residual Anixety, was unfriendly and lost control").setIds({MECHANIC_DAGDA_LOST_CONTROL_BUFF}).setBoss(&boss_dagda),
+		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
 		Mechanic().setName("was targeted by Blob of Blight").setDescription("Fokus Target of an orb").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_TARGET}).setBoss(&boss_greer),
@@ -756,6 +798,15 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
 		Mechanic().setName("was hit by Eruption Vent").setDescription("Shockwave from a spawned Sulfuric Geysire, mostly interesting for Hopscotch tracking in fight").setIds({MECHANIC_URA_ERUPTION_VENT}).setBoss(&boss_ura),
 		Mechanic().setName("was hit by Sulfuric Eruption").setIds({MECHANIC_URA_SULFURIC_ERUPTION}).setBoss(&boss_ura),
+
+		//Kela
+		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got first Biting Swarm").setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm").setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked down by Tackle").setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
 }
