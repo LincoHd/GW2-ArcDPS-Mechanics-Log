@@ -133,7 +133,7 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - blob of blight
 - Ura, the Steamshrieker
   - sharding
-  - hit by shockwave of sulfuric geysire
+  - hit by shockwave of geysire
 
 ### Fractals of the Mists
 - flux bombs
