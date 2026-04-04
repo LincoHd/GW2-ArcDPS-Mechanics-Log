@@ -465,9 +465,9 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic("stood in the green circle",{31340,31391,31529,31750},&boss_vg,false,false,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Distributed Magic",""),
 
 		//Gorseval
-		Mechanic().setName("was slammed").setIds({MECHANIC_GORS_SLAM}).setIsInterupt(true).setBoss(&boss_gors),
-		Mechanic().setName("was egged").setIds({MECHANIC_GORS_EGG}).setBoss(&boss_gors),
-		Mechanic().setName("touched an orb").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
+		Mechanic().setName("was slammed").setDescription("Gorseval Spectral Impact which knocks back and applies Torment").setIds({MECHANIC_GORS_SLAM}).setIsInterupt(true).setBoss(&boss_gors),
+		Mechanic().setName("was egged").setDescription("Gorseval Ghastly Prison which encases players in an egg-like prison. To be freed prison need to be destroyed whith damage from special action key or other players.").setIds({MECHANIC_GORS_EGG}).setBoss(&boss_gors),
+		Mechanic().setName("touched an orb").setDescription("Touching an orb gives 10 Stacks Spectral Darkness which reduces outgoing damage, increases incoming damage and reduced health every second, cured by collecting golden collored orbs").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
 		
 		//Sabetha
 		Mechanic().setName("got a sapper bomb").setIds({MECHANIC_SAB_SAPPER_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
@@ -475,12 +475,12 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("stood in cannon fire").setIds({MECHANIC_SAB_CANNON}).setBoss(&boss_sab),
 		//Mechanic().setName("touched the flame wall").setIds({MECHANIC_SAB_FLAMEWALL}).setBoss(&boss_sab),
 
-		//Slothasaur
-		Mechanic().setName("was hit with tantrum").setIds({MECHANIC_SLOTH_TANTRUM}).setBoss(&boss_sloth),
-		Mechanic().setName("got a bomb").setIds({MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000).setBoss(&boss_sloth),
-		Mechanic().setName("stood in bomb aoe").setIds({MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(verbosity_chart).setBoss(&boss_sloth),
+		//Slothasor
+		Mechanic().setName("was hit with tantrum").setDescription("Slothasor creates 3 AoEs under every player which deals damage and knockdown for 5 seconds.").setIds({MECHANIC_SLOTH_TANTRUM}).setBoss(&boss_sloth),
+		Mechanic().setName("was targeted by Volatile Poison").setDescription("An special poison which deals 750 damage per tick and after short time or by pressing the special action key purge leaves a Volatile Poison pool behind").setIds({MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000).setBoss(&boss_sloth),
+		Mechanic().setName("stood in Volatile Poison AoE").setDescription("An slowly expanding AoE which deals massive damage to anyone standing in it. Grows to 900 units and disappears after short time").setIds({MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(verbosity_chart).setBoss(&boss_sloth),
 		Mechanic().setName("was hit by flame breath").setIds({MECHANIC_SLOTH_FLAME_BREATH}).setBoss(&boss_sloth),
-		Mechanic().setName("was hit by shake").setIds({MECHANIC_SLOTH_SHAKE}).setBoss(&boss_sloth),
+		Mechanic().setName("was hit by shake").setDescription("Spore Release from which each projectile applies 5 stacks of Torment, Poison, Bleeding and Burning each.").setIds({MECHANIC_SLOTH_SHAKE}).setBoss(&boss_sloth),
 		Mechanic().setName("is fixated").setIds({MECHANIC_SLOTH_FIXATE}).setFailIfHit(false).setBoss(&boss_sloth),
 
 		//Bandit Trio
@@ -760,11 +760,11 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Whirlpool").setIds({65252}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Soo-Won Tsunami").setIds({64748, 66489}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("was revealed").setDescription("Enemies stop running towards the boss center when a player is revealed.").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
 		//Cerus
-		Mechanic().setName("hit by empowered Envious Gaze").setDescription("Empowered Wall of Cerus or his Add").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze").setDescription("Normal Wall of Cerus or his Add").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by empowered Envious Gaze").setDescription("Empowered Wall of Cerus or Embodiment of Envy").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by Envious Gaze").setDescription("Normal Wall of Cerus or Embodiment of Envy").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
 
 		//Dagda
