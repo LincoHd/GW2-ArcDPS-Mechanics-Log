@@ -765,10 +765,11 @@ std::vector<Mechanic>& getMechanics()
 		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
-		Mechanic().setName("was targeted by Blob of Blight").setDescription("Fokus Target of an orb").setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_TARGET}).setBoss(&boss_greer),
+		Mechanic().setName("was targeted by Blob of Blight").setDescription("Fokus Target of an orb").setIds({ BUFF_TARGET }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Blob of Blight").setDescription("Often also called orbs, getting hit from hit can be deadly. Also counting all the little orbs from the big orbs").setVerbosity(verbosity_chart).setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Ripples of Rot").setDescription("Jump from Greer or Gree, the Bringer which in challenge Mode applies Plageu Rot (Red Player Aoes)").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C, MECHANIC_GREER_RIPPLES_OF_ROT_D, MECHANIC_GREER_RIPPLES_OF_ROT_E}).setBoss(&boss_greer),
 		Mechanic().setName("hit by Cage of Decay").setIsInterupt(true).setDescription("Fan of 5 arrows with an circle at the end. Rippling thorn barriers travel along these lines, damaging and knocking back anything struck by them").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B, MECHANIC_GREER_CAGE_OF_DECAY_C, MECHANIC_GREER_CAGE_OF_DECAY_D, MECHANIC_GREER_CAGE_OF_DECAY_E}).setBoss(&boss_greer),
+
 		//Decima
 		Mechanic().setName("was hit twice from Fluxlance").setDescription("Fluxlance Fusillade ingame, also called Arrows. Getting hit by it twice in challenge mode gives you an exposed stack.").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_A, MECHANIC_DECIMA_FLUXLANCE_B}).setSpecialRequirement(requirementCMExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
 		Mechanic().setName("was hit twice from Fluxlance").setDescription("Fluxlance Fusillade ingame, also called Arrows. Getting hit by it twice can downstate you in normal mode and gives you an exposed stack in challenge mode").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_FLUXLANCE_C, MECHANIC_DECIMA_FLUXLANCE_D, MECHANIC_DECIMA_FLUXLANCE_E, MECHANIC_DECIMA_FLUXLANCE_F, MECHANIC_DECIMA_FLUXLANCE_G, MECHANIC_DECIMA_FLUXLANCE_H}).setSpecialRequirement(requirementDecimaExposedFluxance).setValidIfDown(true).setBoss(&boss_decima),
