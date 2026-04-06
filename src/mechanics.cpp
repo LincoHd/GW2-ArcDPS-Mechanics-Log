@@ -428,17 +428,6 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 	return true;
 }
 
-bool requirementFromBoss(const Mechanic& current_mechanic, cbtevent* ev,
-							   ag* ag_src, ag* ag_dst, Player* player_src,
-							   Player* player_dst, Player* current_player)
-{
-	if (!ev) return false;
-	if (!player_dst) return false;
-	if (!ag_src) return false;
-	uint32_t sourceId = ag_src->id;
-	return current_mechanic.boss->hasId(sourceId);
-}
-
 bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
                              ag* ag_src, ag* ag_dst, Player* player_src,
                              Player* player_dst, Player* current_player)
@@ -446,6 +435,19 @@ bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
 	if (!current_player->current_log_npc) return false;
 	if (!current_mechanic.boss) return false;
 	return current_mechanic.boss->hasId(*current_player->current_log_npc);
+}
+
+bool requirementRevealedFromDagda(const Mechanic& current_mechanic, cbtevent* ev,
+							 ag* ag_src, ag* ag_dst, Player* player_src,
+							 Player* player_dst, Player* current_player)
+{
+	if (!ev) return false;
+	//CO
+	if (!current_player->current_log_npc || !current_mechanic.boss->hasId(*current_player->current_log_npc)) return false;
+	// Applying buff
+	if (!ev->buff || ev->buff_dmg != 0) return false;
+	if (ev->value < 19000) return false;
+	return true;
 }
 
 int64_t valueDefault(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
@@ -775,12 +777,12 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
 
 		//Dagda
-		Mechanic().setName("targeted by Soul Feast").setDescription("Players struck by this are inflicted with Infirmity and Residual Anxiety").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Soul Feast").setSpecialRequirement(requirementRevealedFromDagda).setDescription("Following aoe players standing in moving Soul Feast are inflicted with Infirmity and Residual Anxiety").setIds({BUFF_REVEALED}).setBoss(&boss_dagda),
 		Mechanic().setName("targeted by Charging Constellation").setDescription("Also known as Numbers, oversight of the people target by 1-5 Number").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
 		Mechanic().setName("hit by Demonic Blast").setDescription("Also known as Pizza/Cones, a eight cone-shaped AoEs which radiate from Dagda, getting hit applies Debilitate and Residual Anxiety").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
 		Mechanic().setName("targeted by Meteor Crash").setDescription("Green Aoes where at least 3 Players need to be present. Skill and damage from it is called Meteor Crash, but game maps it ingame to Shared Destruction").setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
-		Mechanic().setName("Lost Control").setDescription("Player had 10 Stacks of Residual Anixety, was unfriendly and lost control").setIds({MECHANIC_DAGDA_LOST_CONTROL_BUFF}).setBoss(&boss_dagda),
-		
+		//Mechanic().setName("Lost Control").setDescription("Player had 10 Stacks of Residual Anixety, was unfriendly and lost control").setIds({MECHANIC_DAGDA_RESIDUAL_ANXIETY}).setBoss(&boss_dagda), //TODO Look into buffs.
+
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
 		Mechanic().setName("was targeted by Blob of Blight").setDescription("Fokus Target of an orb").setIds({ BUFF_TARGET }).setBoss(&boss_greer),

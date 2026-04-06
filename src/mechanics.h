@@ -142,4 +142,6 @@ bool requirementDeimosOil(const Mechanic & current_mechanic, cbtevent* ev, ag* a
 
 bool requirementOnSelf(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
 
+bool requirementRevealedFromDagda(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
+
 std::vector<Mechanic>& getMechanics();
