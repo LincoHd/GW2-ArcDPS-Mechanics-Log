@@ -785,7 +785,7 @@ std::vector<Mechanic>& getMechanics()
 
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
-		Mechanic().setName("was targeted by Blob of Blight").setDescription("Fokus Target of an orb").setIds({ BUFF_TARGET }).setBoss(&boss_greer),
+		Mechanic().setName("was targeted by Blob of Blight").setTargetIsDst(true).setFrequencyPlayer(1000).setFailIfHit(false).setDescription("Fokus Target of an orb").setIds({ BUFF_TARGET }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Blob of Blight").setDescription("Often also called orbs, getting hit from hit can be deadly. Also counting all the little orbs from the big orbs").setVerbosity(verbosity_chart).setIds({ MECHANIC_GREER_BLOB_OF_BLIGHT_A, MECHANIC_GREER_BLOB_OF_BLIGHT_B }).setBoss(&boss_greer),
 		Mechanic().setName("hit by Ripples of Rot").setDescription("Jump from Greer or Gree, the Bringer which in challenge Mode applies Plageu Rot (Red Player Aoes)").setIds({ MECHANIC_GREER_RIPPLES_OF_ROT_A, MECHANIC_GREER_RIPPLES_OF_ROT_B, MECHANIC_GREER_RIPPLES_OF_ROT_C, MECHANIC_GREER_RIPPLES_OF_ROT_D, MECHANIC_GREER_RIPPLES_OF_ROT_E}).setBoss(&boss_greer),
 		Mechanic().setName("hit by Cage of Decay").setIsInterupt(true).setDescription("Fan of 5 arrows with an circle at the end. Rippling thorn barriers travel along these lines, damaging and knocking back anything struck by them").setIds({ MECHANIC_GREER_CAGE_OF_DECAY_A, MECHANIC_GREER_CAGE_OF_DECAY_B, MECHANIC_GREER_CAGE_OF_DECAY_C, MECHANIC_GREER_CAGE_OF_DECAY_D, MECHANIC_GREER_CAGE_OF_DECAY_E}).setBoss(&boss_greer),
