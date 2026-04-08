@@ -458,8 +458,8 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("touched an orb").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
 		
 		//Sabetha
-		Mechanic().setName("got a sapper bomb").setIds({MECHANIC_SAB_SAPPER_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
-		Mechanic().setName("got a time bomb").setIds({MECHANIC_SAB_TIME_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
+		Mechanic().setName("got a sapper bomb").setDescription("Special Action key used for launch all players standing on top of certain platforms towards a certain direction.").setIds({MECHANIC_SAB_SAPPER_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
+		Mechanic().setName("got a time bomb").setDescription("Tags a player with an large orange circle which will explode after 3 seconds and greatly damage allies caught in the explosion AoE.").setIds({MECHANIC_SAB_TIME_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
 		Mechanic().setName("stood in cannon fire").setIds({MECHANIC_SAB_CANNON}).setBoss(&boss_sab),
 		//Mechanic().setName("touched the flame wall").setIds({MECHANIC_SAB_FLAMEWALL}).setBoss(&boss_sab),
 
@@ -477,9 +477,9 @@ std::vector<Mechanic>& getMechanics()
 
 		//Matthias
 		//Mechanic().setName("was hadoukened").setIds({MECHANIC_MATT_HADOUKEN_HUMAN,MECHANIC_MATT_HADOUKEN_ABOM}).setBoss(&boss_matti),
-		Mechanic().setName("reflected shards").setIds({MECHANIC_MATT_SHARD_HUMAN,MECHANIC_MATT_SHARD_ABOM}).setTargetIsDst(false).setBoss(&boss_matti),
-		Mechanic().setName("got a bomb").setIds({MECHANIC_MATT_BOMB}).setFailIfHit(false).setFrequencyPlayer(12000).setBoss(&boss_matti),
-		Mechanic().setName("got a corruption").setIds({MECHANIC_MATT_CORRUPTION}).setFailIfHit(false).setBoss(&boss_matti),
+		Mechanic().setName("reflected shards").setDescription("Shards which are launched away from Matthias, each stack of it increases outgoing damage by 10% per stack.").setIds({MECHANIC_MATT_SHARD_HUMAN,MECHANIC_MATT_SHARD_ABOM}).setTargetIsDst(false).setBoss(&boss_matti),
+		Mechanic().setName("got a bomb").setDescription("Debuff which will inflict 10% of maximum health every second and after short time or by pressing the special action key purge leaves a Well of the Profane behind").setIds({MECHANIC_MATT_BOMB}).setFailIfHit(false).setFrequencyPlayer(12000).setBoss(&boss_matti),
+		Mechanic().setName("got a corruption").setDescription("An AoE circle which will follow the player and pulse damage to all players within it, can be cleansed in a fountain.").setIds({MECHANIC_MATT_CORRUPTION}).setFailIfHit(false).setBoss(&boss_matti),
 		Mechanic().setName("is sacrificed").setIds({MECHANIC_MATT_SACRIFICE}).setFailIfHit(false).setBoss(&boss_matti),
 		Mechanic("touched a ghost",{34413},&boss_matti,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Surrender",""),
 		//Mechanic("touched an icy patch",{26766},&boss_matti,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,10000,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Slow",""), //look for Slow application with 10 sec duration. Disabled because some mob in Istan applies the same duration of slow
@@ -495,22 +495,22 @@ std::vector<Mechanic>& getMechanics()
 		
 		//Xera
 		Mechanic("stood in red half",{34921},&boss_xera,true,false,verbosity_all,false,true,target_location_dst,4000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,true,requirementDefault,valueDefault,"TODO:check internal name",""),
-		Mechanic().setName("has magic").setIds({MECHANIC_XERA_MAGIC}).setFailIfHit(false).setValidIfDown(true).setValue(15000).setBoss(&boss_xera),
-		Mechanic().setName("used magic").setIds({MECHANIC_XERA_MAGIC_BUFF}).setFailIfHit(false).setTargetIsDst(false).setFrequencyGlobal(12000).setValidIfDown(true).setBoss(&boss_xera).setSpecialRequirement(requirementOnSelf).setVerbosity(0),
-		Mechanic().setName("triggered an orb").setIds({MECHANIC_XERA_ORB}).setBoss(&boss_xera),
-		Mechanic().setName("stood in an orb aoe").setIds({MECHANIC_XERA_ORB_AOE}).setFrequencyPlayer(1000).setVerbosity(verbosity_chart).setBoss(&boss_xera),
+		Mechanic().setName("has magic").setIds({MECHANIC_XERA_MAGIC}).setDescription("Intervention is a special action skill, which is used to place down a dome that protects against Xera's deadliest attack.").setFailIfHit(false).setValidIfDown(true).setValue(15000).setBoss(&boss_xera),
+		Mechanic().setName("used magic").setIds({MECHANIC_XERA_MAGIC_BUFF}).setDescription("Player used Intervention special action Key").setFailIfHit(false).setTargetIsDst(false).setFrequencyGlobal(12000).setValidIfDown(true).setBoss(&boss_xera).setSpecialRequirement(requirementOnSelf).setVerbosity(0),
+		Mechanic().setName("triggered an orb").setIds({MECHANIC_XERA_ORB}).setDescription("Temporal Shred orbs from outgoing from Xera Laser").setBoss(&boss_xera),
+		Mechanic().setName("stood in an orb aoe").setIds({MECHANIC_XERA_ORB_AOE}).setDescription("Temporal Shred orb AoE after an orb hit an player").setFrequencyPlayer(1000).setVerbosity(verbosity_chart).setBoss(&boss_xera),
 		Mechanic().setName("was teleported").setIds({MECHANIC_XERA_PORT}).setVerbosity(verbosity_chart).setBoss(&boss_xera),
 
 		//Cairn
 		Mechanic().setName("was teleported").setIds({MECHANIC_CAIRN_TELEPORT}).setBoss(&boss_cairn),
-		Mechanic().setName("was slapped").setIds({MECHANIC_CAIRN_SWEEP}).setBoss(&boss_cairn).setIsInterupt(true),
+		Mechanic().setName("was slapped").setDescription("Orbital Sweep from Cairn, he slams down a larga blade and then counter-clockwise spins it dealing damage and launching players a large distance away.").setIds({MECHANIC_CAIRN_SWEEP}).setBoss(&boss_cairn).setIsInterupt(true),
 		//Mechanic().setName("reflected shards").setIds({MECHANIC_CAIRN_SHARD}).setTargetIsDst(false).setBoss(&boss_cairn),
 		Mechanic().setName("missed a green circle").setIds({MECHANIC_CAIRN_GREEN_A,MECHANIC_CAIRN_GREEN_B,MECHANIC_CAIRN_GREEN_C,MECHANIC_CAIRN_GREEN_D,MECHANIC_CAIRN_GREEN_E,MECHANIC_CAIRN_GREEN_F}).setIsInterupt(true).setBoss(&boss_cairn),
 		
 		//Samarog
 		Mechanic().setName("was shockwaved").setIds({MECHANIC_SAM_SHOCKWAVE}).setIsInterupt(true).setBoss(&boss_sam),
-		Mechanic().setName("was horizontally slapped").setIds({MECHANIC_SAM_SLAP_HORIZONTAL}).setIsInterupt(true).setBoss(&boss_sam),
-		Mechanic().setName("was vertically smacked").setIds({MECHANIC_SAM_SLAP_VERTICAL}).setIsInterupt(true).setBoss(&boss_sam),
+		Mechanic().setName("was horizontally slapped").setDescription("Prisoner Sweep from Samarog, a wide sweeping attack with a spear, knocking back everyone in front of him").setIds({MECHANIC_SAM_SLAP_HORIZONTAL}).setIsInterupt(true).setBoss(&boss_sam),
+		Mechanic().setName("was vertically smacked").setDescription("Bludgeon from Samarog, dealing a massive amount of damage and Knockdown.").setIds({MECHANIC_SAM_SLAP_VERTICAL}).setIsInterupt(true).setBoss(&boss_sam),
 		Mechanic().setName("is fixated").setIds({MECHANIC_SAM_FIXATE_SAM}).setFailIfHit(false).setBoss(&boss_sam),
 		Mechanic().setName("has big green").setIds({MECHANIC_SAM_GREEN_BIG}).setFailIfHit(false).setBoss(&boss_sam),
 		Mechanic().setName("has small green").setIds({MECHANIC_SAM_GREEN_SMALL}).setFailIfHit(false).setBoss(&boss_sam),
@@ -519,17 +519,17 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic("touched an oil",{37716},&boss_deimos,true,false,verbosity_all,false,true,target_location_dst,5000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDeimosOil,valueDefault,"Rapid Decay",""),
 		Mechanic().setName("was smashed").setIds({MECHANIC_DEIMOS_SMASH,MECHANIC_DEIMOS_SMASH_INITIAL,MECHANIC_DEIMOS_SMASH_END_A,MECHANIC_DEIMOS_SMASH_END_B}).setBoss(&boss_deimos),
 		Mechanic().setName("closed a tear").setIds({MECHANIC_DEIMOS_TEAR}).setFailIfHit(false).setBoss(&boss_deimos),
-		Mechanic("has the teleport",{37730},&boss_deimos,false,true,verbosity_all,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Chosen by Eye of Janthir",""),
-		Mechanic("was teleported",{38169},&boss_deimos,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"",""),
+		Mechanic("has the teleport",{37730},&boss_deimos,false,true,verbosity_all,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Chosen by Eye of Janthir","Player with the green circle"),
+		Mechanic("was teleported",{38169},&boss_deimos,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"","Players teleported down from green circle"),
 
 		//Soulless Horror
-		Mechanic().setName("stood in inner ring").setIds({MECHANIC_HORROR_DONUT_INNER}).setVerbosity(verbosity_chart).setBoss(&boss_sh),
-		Mechanic().setName("stood in outer ring").setIds({MECHANIC_HORROR_DONUT_OUTER}).setVerbosity(verbosity_chart).setBoss(&boss_sh),
-		Mechanic().setName("stood in torment aoe").setIds({MECHANIC_HORROR_GOLEM_AOE}).setBoss(&boss_sh),
-		Mechanic().setName("stood in pie slice").setIds({MECHANIC_HORROR_PIE_4_A,MECHANIC_HORROR_PIE_4_B}).setVerbosity(verbosity_chart).setBoss(&boss_sh),
+		Mechanic().setName("stood in inner ring").setIds({MECHANIC_HORROR_DONUT_INNER}).setDescription("Vortex Slash from Soulless Horror, Circle AoE which deals damage needs to be avoided for Necro Dancer achievement").setVerbosity(verbosity_chart).setBoss(&boss_sh),
+		Mechanic().setName("stood in outer ring").setIds({MECHANIC_HORROR_DONUT_OUTER}).setDescription("Vortex Slash from Soulless Horror, Donut AoE which deals damage needs to be avoided for Necro Dancer achievement").setVerbosity(verbosity_chart).setBoss(&boss_sh),
+		Mechanic().setName("stood in torment aoe").setDescription("AoE from tormented Dead after dying.").setIds({MECHANIC_HORROR_GOLEM_AOE}).setBoss(&boss_sh),
+		Mechanic().setName("stood in pie slice").setDescription("Pairs of 4 Cones of Damage called Quad Slash").setIds({MECHANIC_HORROR_PIE_4_A,MECHANIC_HORROR_PIE_4_B}).setVerbosity(verbosity_chart).setBoss(&boss_sh),
 		Mechanic().setName("touched a scythe").setIds({MECHANIC_HORROR_SCYTHE}).setBoss(&boss_sh),
 		Mechanic().setName("took fixate").setIds({MECHANIC_HORROR_FIXATE}).setFailIfHit(false).setVerbosity(verbosity_chart).setBoss(&boss_sh),
-		Mechanic().setName("was debuffed").setIds({MECHANIC_HORROR_DEBUFF}).setFailIfHit(false).setVerbosity(verbosity_chart).setBoss(&boss_sh),
+		Mechanic().setName("was debuffed").setDescription("Debuff applied to the current Fixated player, increases all incoming damage by 40% per stack.").setIds({MECHANIC_HORROR_DEBUFF}).setFailIfHit(false).setVerbosity(verbosity_chart).setBoss(&boss_sh),
 		Mechanic("CCed a tormented dead",{872,833,31465},&boss_sh,true,true,verbosity_all,false,true,target_location_src,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementShTdCc,valueDefault,"Stun, Daze, Temporal stasis",""),
 
 		//Statues
