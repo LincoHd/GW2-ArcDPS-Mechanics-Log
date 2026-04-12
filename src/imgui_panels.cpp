@@ -1,3 +1,4 @@
+
 #include "imgui_panels.h"
 
 #include <Windows.h>
@@ -147,9 +148,15 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
 			if (!current_player_mechanics->isRelevant()) continue;
 			if (!current_player_mechanics->mechanic) continue;
 			if (!filter.passFilter(current_player, nullptr, current_player_mechanics->mechanic,verbosity_chart)) continue;
-
+			ImGui::Text(current_player_mechanics->mechanic->getChartName().c_str());
+			if (current_player_mechanics->mechanic->description.length() > 0)
+			{
+				std::string test = current_player_mechanics->mechanic->description.data();
+				ImGui::SameLine(); showHelpMarker(test.data());
+			}
+			
             ImGui::Indent();
-            ImGui::Text(current_player_mechanics->mechanic->getChartName().c_str());
+			
             if(!current_player_mechanics->mechanic->fail_if_hit)
             {
                 ImGui::SameLine(getChartColumnLoc(window_width,1));
