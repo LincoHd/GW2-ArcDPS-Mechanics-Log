@@ -13,6 +13,13 @@
 #include "MechanicEntry.h"
 #include "PlayerEntry.h"
 
+enum ChartClear
+{
+	no_clear = 0,
+	new_boss_clear = 1,
+	every_time_clear = 2,
+};
+
 class Tracker
 {
 public:
@@ -25,6 +32,7 @@ public:
 	
 	std::list<LogEvent> log_events;
 	int max_log_events = 300;
+	int clear_chart = no_clear;
 	
 	bool show_only_self = false;
 	bool export_chart_on_close = true;
@@ -44,6 +52,7 @@ public:
 	void addPull(Boss* boss);
 	void resetAllPlayerStats();
 	void resetChartandLogStats();
+	void resetPlayerChartandLogStats(PlayerEntry* new_player_src);
 	void clearLog();
 	uint16_t getMechanicsTotal();
 	uint8_t getPlayerNumInCombat();

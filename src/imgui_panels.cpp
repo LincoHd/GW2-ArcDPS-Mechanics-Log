@@ -290,6 +290,12 @@ void AppOptions::draw(Tracker* tracker)
 
 		ImGui::Checkbox("Export chart to CSV when game is closed", &tracker->export_chart_on_close);
 
+		ImGui::Combo("Behaviour of Chart", &tracker->clear_chart,
+				"No Clear\0"
+									"Clear on new Boss\0"
+									"Clear everytime Combat start\0\0",
+									3);
+		
 		ImGui::Separator();
 
 		ImGui::Text("Where to show each mechanic");

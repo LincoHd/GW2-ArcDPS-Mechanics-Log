@@ -472,6 +472,8 @@ void writeIni()
 
 	}
 
+	//TODO: ADD CLEAR CHART.
+
 	rc = mechanics_ini.SaveFile("addons\\arcdps\\arcdps_mechanics.ini");
 }
 

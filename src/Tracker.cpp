@@ -152,6 +152,17 @@ void Tracker::resetChartandLogStats()
 	}
 }
 
+void Tracker::resetPlayerChartandLogStats(PlayerEntry* entry)
+{
+	entry->pulls = 0;
+	entry->entries.clear();
+	entry->mechanics_failed = 0;
+	entry->mechanics_neutral = 0;
+	entry->downs = 0;
+	entry->deaths = 0;
+	entry->last_hit_time = 0;
+}
+
 void Tracker::clearLog()
 {
 	std::lock_guard<std::mutex> lg(log_events_mtx);
@@ -191,7 +202,11 @@ void Tracker::processCombatEnter(const cbtevent* ev, ag* new_agent)
 	if (new_entry = getPlayerEntry(new_agent))
 	{
 		Player* new_player = new_entry->player;
-
+		if (clear_chart == every_time_clear)
+		{
+			resetPlayerChartandLogStats(new_entry);
+		}
+		
 		new_entry->combatEnter();
 
 		if (new_agent && new_agent->self)
