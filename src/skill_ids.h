@@ -136,7 +136,6 @@ const uint32_t MECHANIC_DAGDA_TARGET_ORDER_4 = 64999;
 const uint32_t MECHANIC_DAGDA_TARGET_ORDER_5 = 65717;
 const uint32_t MECHANIC_DAGDA_DEMONIC_BLAST = 71082; //Cone Aoes Blast
 const uint32_t MECHANIC_DAGDA_SHARED_DESTRUCTION = 70182; //Meteor Crash Green Aoe Target.
-const uint32_t MECHANIC_DAGDA_LOST_CONTROL_BUFF = 70297; 
 
 //Greer
 const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
@@ -153,7 +152,6 @@ const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_B = 75554;
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_C = 74917;
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_D = 75025; //Cage of Decay Gree
 const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_E = 74773;
-const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_TARGET = 44655; //Target of Blob of Blight
 
 //Decima
 const uint32_t MECHANIC_DECIMA_FLUXLANCE_A = 74660; //Decima Arrow sequence fired
@@ -224,3 +222,4 @@ const uint32_t BUFF_ILLUSION_OF_LIFE = 10346;//Illusion of Life
 const uint32_t BUFF_CRYSTALLINE_HEART = 37657;//Crystalline Heart, for envoy armor 2 collection
 const uint32_t BUFF_GENERIC_KNOCKDOWN = 23294 ; //Knockdown, used for Kela Crocodiles
 const uint32_t BUFF_REVEALED = 890; //Revealed
+const uint32_t BUFF_TARGET = 44655; //Target
