@@ -120,6 +120,70 @@ const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_B = 52673;//Incineration Orb
 const uint32_t MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C = 53093;//Incineration Orb
 const uint32_t MECHANIC_QADIM_TELEPORT = 52281;//Swap
 
+//Cerus
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_A = 72200; //Wall Double
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_B = 70790; //Wall Single 
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_C = 70538; //Wall Double
+const uint32_t MECHANIC_CERUS_ENVIOUS_GAZE_D = 69814; //Wall Single
+const uint32_t MECHANIC_CERUS_Insatiable = 70253; //Orb Collected Buff
+
+//Dagda
+const uint32_t MECHANIC_DAGDA_SOULFEAST = 70567; //Soul Feast
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_1 = 65869; //Numbers
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_2 = 65088;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_3 = 64377;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_4 = 64999;
+const uint32_t MECHANIC_DAGDA_TARGET_ORDER_5 = 65717;
+const uint32_t MECHANIC_DAGDA_DEMONIC_BLAST = 71082; //Cone Aoes Blast
+const uint32_t MECHANIC_DAGDA_SHARED_DESTRUCTION = 70182; //Meteor Crash Green Aoe Target.
+
+//Greer
+const uint32_t MECHANIC_GREER_WAVE_OF_CORRUPTION_A = 74867; //Wave of Corruption Greer
+const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_A = 75089; //Blob of Blight Greer
+const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_B = 74881; //Blob of Blight not reflectable Damage
+const uint32_t MECHANIC_GREER_BLOB_OF_BLIGHT_C = 75294;
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_A = 75456;
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_B = 75123;
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_C = 75519;
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_D = 75332;
+const uint32_t MECHANIC_GREER_RIPPLES_OF_ROT_E = 75688;
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_A = 75873; //Cage of Decay Greer
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_B = 75554; 
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_C = 74917;
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_D = 75025; //Cage of Decay Gree
+const uint32_t MECHANIC_GREER_CAGE_OF_DECAY_E = 74773;
+
+//Decima
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_A = 74660; //Decima Arrow sequence fired
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_B = 75954; 
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_C = 75880; //Decima Arrow fired at once
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_D = 74702;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_E = 74916;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_F = 74964;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_G = 75098;
+const uint32_t MECHANIC_DECIMA_FLUXLANCE_H = 75141;
+const uint32_t MECHANIC_DECIMA_CHORUS_OF_THUNDER_A = 74641;
+const uint32_t MECHANIC_DECIMA_CHORUS_OF_THUNDER_B = 74706;
+const uint32_t MECHANIC_DECIMA_CHORUS_OF_THUNDER_C = 75523;
+const uint32_t MECHANIC_DECIMA_SEISMIC_CRASH_A = 74653; //Decima Knockback
+const uint32_t MECHANIC_DECIMA_SEISMIC_CRASH_B = 75422;
+
+//Ura
+const uint32_t MECHANIC_URA_DETERRENCE = 75075;
+const uint32_t MECHANIC_URA_BLOODSTONE_SATURATION = 75056;
+const uint32_t MECHANIC_URA_ERUPTION_VENT = 75200;
+const uint32_t MECHANIC_URA_SULFURIC_ERUPTION = 75080;
+
+//Kela
+const uint32_t MECHANIC_KELA_SCALDING_WAVE = 79521;
+const uint32_t MECHANIC_KELA_TORNADO = 79524;
+const uint32_t MECHANIC_KELA_BITING_SWARM_A = 79526; //Buff
+const uint32_t MECHANIC_KELA_BITING_SWARM_B = 79513; //Hidden, Effect and Screenborder
+const uint32_t MECHANIC_KELA_LIGHTNING_STRIKE = 79448;
+const uint32_t MECHANIC_KELA_TACKLE = 79443; //Crocs Jump
+const uint32_t MECHANIC_KELA_HUNTED = 79470; //Crocs Fixated
+
+//Fractal
 const uint32_t MECHANIC_FOTM_AGONY = 15773;//Agony
 const uint32_t MECHANIC_FOTM_SOCIAL_AWKWARDNESS = 33475;//Social Awkwardness
 const uint32_t MECHANIC_FOTM_FLUX_BOMB = 37695;//unnamed
@@ -156,3 +220,6 @@ const uint32_t BUFF_STABILITY = 1122;//Stability
 const uint32_t BUFF_VAPOR_FORM = 5620;//Vapor Form
 const uint32_t BUFF_ILLUSION_OF_LIFE = 10346;//Illusion of Life
 const uint32_t BUFF_CRYSTALLINE_HEART = 37657;//Crystalline Heart, for envoy armor 2 collection
+const uint32_t BUFF_GENERIC_KNOCKDOWN = 23294 ; //Knockdown, used for Kela Crocodiles
+const uint32_t BUFF_REVEALED = 890; //Revealed
+const uint32_t BUFF_TARGET = 44655; //Target

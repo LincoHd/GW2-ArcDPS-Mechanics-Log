@@ -128,6 +128,12 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - touched lava
   - expanding lightning
   - purple rectangle
+- Greer, the Blightbringer
+  - wave of corruption
+  - blob of blight
+- Ura, the Steamshrieker
+  - sharding
+  - hit by shockwave of sulfuric geysire
 
 ### Fractals of the Mists
 - flux bombs

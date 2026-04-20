@@ -138,6 +138,20 @@ void Tracker::resetAllPlayerStats()
 	players.clear();
 }
 
+void Tracker::resetChartandLogStats()
+{
+	for (PlayerEntry& entry : player_entries)
+	{
+		entry.pulls = 0;
+		entry.entries.clear();
+		entry.mechanics_failed = 0;
+		entry.mechanics_neutral = 0;
+		entry.downs = 0;
+		entry.deaths = 0;
+		entry.last_hit_time = 0;
+	}
+}
+
 void Tracker::clearLog()
 {
 	std::lock_guard<std::mutex> lg(log_events_mtx);
@@ -212,17 +226,6 @@ void Tracker::processCombatEnter(const cbtevent* ev, ag* new_agent)
 			}
 		}
 	}
-
-	if (!boss_data && new_agent)
-	{
-		for (auto current_boss = bosses.begin(); current_boss != bosses.end(); ++current_boss)
-		{
-			if ((*current_boss)->hasId(new_agent->prof))
-			{
-				boss_data = *current_boss;
-			}
-		}
-	}
 }
 
 void Tracker::processCombatExit(const cbtevent* ev, ag* new_agent)
@@ -245,6 +248,17 @@ void Tracker::processCombatExit(const cbtevent* ev, ag* new_agent)
 
 void Tracker::processLogNpcUpdate(uint64_t species_id)
 {
+	if (!boss_data)
+	{
+
+		for (auto current_boss = bosses.begin(); current_boss != bosses.end(); ++current_boss)
+		{
+			if ((*current_boss)->hasId(species_id))
+			{
+				boss_data = *current_boss;
+			}
+		}
+	}
 	current_log_npc = species_id;
 }
 
