@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <string>
 #include <vector>
+#include <array>
 #include <cstdint>
 
 #include "arcdps_datastructures.h"
@@ -67,6 +68,7 @@ bool valid_mechanics_ini = false;
 WPARAM log_key;
 WPARAM chart_key;
 
+std::array<bool, 256> vk_down{};
 
 /* dll main -- winapi */
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD ulReasonForCall, LPVOID lpReserved) {
@@ -132,7 +134,7 @@ uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case WM_SYSKEYUP:
 		{
 			const int vkey = (int)wParam;
-			io->KeysDown[vkey] = 0;
+			if (vkey >= 0 && vkey < 256) vk_down[vkey] = false;
 			if (vkey == VK_CONTROL)
 			{
 				io->KeyCtrl = false;
@@ -151,7 +153,7 @@ uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		case WM_SYSKEYDOWN:
 		{
 			const int vkey = (int)wParam;
-			io->KeysDown[vkey] = 1;
+			if (vkey >= 0 && vkey < 256) vk_down[vkey] = true;
 			if (vkey == VK_CONTROL)
 			{
 				io->KeyCtrl = true;
@@ -170,16 +172,16 @@ uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			if (!wParam)
 			{
-				io->KeysDown[arc_global_mod1] = false;
-				io->KeysDown[arc_global_mod2] = false;
+				vk_down[arc_global_mod1] = false;
+				vk_down[arc_global_mod2] = false;
 			}
 			break;
 		}
 	}
 
-	if (io->KeysDown[arc_global_mod1] && io->KeysDown[arc_global_mod2])
+	if (vk_down[arc_global_mod1] && vk_down[arc_global_mod2])
 	{
-		if (io->KeysDown[log_key] || io->KeysDown[chart_key]) return 0;
+		if (vk_down[log_key] || vk_down[chart_key]) return 0;
 	}
 
 	return uMsg;
@@ -342,13 +344,13 @@ uintptr_t mod_imgui(uint32_t not_charsel_or_loading)
 
 	auto const io = &ImGui::GetIO();
 
-	if (io->KeysDown[arc_global_mod1] && io->KeysDown[arc_global_mod2])
+	if (vk_down[arc_global_mod1] && vk_down[arc_global_mod2])
 	{
-		if (ImGui::IsKeyPressed(log_key))
+		if (vk_down[log_key])
 		{
 			show_app_log = !show_app_log;
 		}
-		if (ImGui::IsKeyPressed(chart_key))
+		if (vk_down[chart_key])
 		{
 			show_app_chart = !show_app_chart;
 		}
@@ -479,7 +481,7 @@ bool modsPressed()
 {
 	auto io = &ImGui::GetIO();
 
-	return io->KeysDown[arc_global_mod1] && io->KeysDown[arc_global_mod2];
+	return vk_down[arc_global_mod1] && vk_down[arc_global_mod2];
 }
 
 bool canMoveWindows()
