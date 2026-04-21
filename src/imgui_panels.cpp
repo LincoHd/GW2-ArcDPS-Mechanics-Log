@@ -66,7 +66,7 @@ void AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Track
     }
 
     if (scroll_to_bottom)
-        ImGui::SetScrollY(1.0f);
+        ImGui::SetScrollHereY(1.0f);
 	scroll_to_bottom = false;
     ImGui::EndChild();
     ImGui::End();
