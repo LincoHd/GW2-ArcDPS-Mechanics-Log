@@ -63,8 +63,6 @@ Boss boss_qadim2 = Boss().setIds({ 22000 }).setTimer(12 * 60 * 1000).setHealth(4
 //W8
 Boss boss_greer = Boss().setIds({ 26725, 26742, 26771, 26859, 26862}).setTimer(10 * 60 * 1000).setHealth(47188000).setName("Greer, the Blightbringer");
 Boss boss_decima = Boss().setIds({26867, 26856}).setTimer(10 * 60 * 1000).setHealth(97020176).setName("Decima, the Stormsinger");
-Boss boss_greer = Boss().setIds({ 26725, 26742, 26771, 26859}).setTimer(10 * 60 * 1000).setHealth(47188000).setName("Greer, the Blightbringer");
-Boss boss_decima = Boss().setIds({26867, 26856}).setTimer(10 * 60 * 1000).setHealth(97020176).setName("Decima, the Stormsinger");
 Boss boss_ura = Boss().setIds({ 26712 }).setTimer(10 * 60 * 1000).setHealth(61345440).setName("Ura, the Steamshrieker");
 
 //FOTM
@@ -245,7 +243,6 @@ std::list<Boss*> bosses =
     &boss_watchknight_triumvirate,
 	&boss_greer,
 	&boss_decima,
-    &boss_ura
-	&boss_decima,
+    &boss_ura,
 	&boss_kela_seneschal_of_waves
 };

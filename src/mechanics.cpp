@@ -387,6 +387,25 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 	return false;
 }
 
+bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+{
+	static KelaBees kela_bees;
+	std::string mechanic_name = "Bee Second";
+	if (!ev) return false;
+	//First Bees ever
+	if (kela_bees.first_touch_time == 0)
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	if ((ev->time - kela_bees.first_touch_time) > current_mechanic.frequency_player) 
+	{
+		kela_bees.first_touch_time = ev->time;
+		return true;
+	}
+	return false;
+}
+
 bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return ev->src_instid == ev->dst_instid;
@@ -409,17 +428,6 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 	return true;
 }
 
-bool requirementFromBoss(const Mechanic& current_mechanic, cbtevent* ev,
-							   ag* ag_src, ag* ag_dst, Player* player_src,
-							   Player* player_dst, Player* current_player)
-{
-	if (!ev) return false;
-	if (!player_dst) return false;
-	if (!ag_src) return false;
-	uint32_t sourceId = ag_src->id;
-	return current_mechanic.boss->hasId(sourceId);
-}
-
 bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
                              ag* ag_src, ag* ag_dst, Player* player_src,
                              Player* player_dst, Player* current_player)
@@ -427,6 +435,19 @@ bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
 	if (!current_player->current_log_npc) return false;
 	if (!current_mechanic.boss) return false;
 	return current_mechanic.boss->hasId(*current_player->current_log_npc);
+}
+
+bool requirementRevealedFromDagda(const Mechanic& current_mechanic, cbtevent* ev,
+							 ag* ag_src, ag* ag_dst, Player* player_src,
+							 Player* player_dst, Player* current_player)
+{
+	if (!ev) return false;
+	//CO
+	if (!current_player->current_log_npc || !current_mechanic.boss->hasId(*current_player->current_log_npc)) return false;
+	// Applying buff
+	if (!ev->buff || ev->buff_dmg != 0) return false;
+	if (ev->value < 19000) return false;
+	return true;
 }
 
 int64_t valueDefault(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
@@ -453,9 +474,9 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic("stood in the green circle",{31340,31391,31529,31750},&boss_vg,false,false,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Distributed Magic",""),
 
 		//Gorseval
-		Mechanic().setName("was slammed").setIds({MECHANIC_GORS_SLAM}).setIsInterupt(true).setBoss(&boss_gors),
-		Mechanic().setName("was egged").setIds({MECHANIC_GORS_EGG}).setBoss(&boss_gors),
-		Mechanic().setName("touched an orb").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
+		Mechanic().setName("was slammed").setDescription("Gorseval Spectral Impact which knocks back and applies Torment").setIds({MECHANIC_GORS_SLAM}).setIsInterupt(true).setBoss(&boss_gors),
+		Mechanic().setName("was egged").setDescription("Gorseval Ghastly Prison which encases players in an egg-like prison. To be freed prison need to be destroyed whith damage from special action key or other players.").setIds({MECHANIC_GORS_EGG}).setBoss(&boss_gors),
+		Mechanic().setName("touched an orb").setDescription("Touching an orb gives 10 Stacks Spectral Darkness which reduces outgoing damage, increases incoming damage and reduced health every second, cured by collecting golden collored orbs").setIds({MECHANIC_GORS_ORB}).setBoss(&boss_gors).setSpecialRequirement(requirementBuffApply),
 		
 		//Sabetha
 		Mechanic().setName("got a sapper bomb").setDescription("Special Action key used for launch all players standing on top of certain platforms towards a certain direction.").setIds({MECHANIC_SAB_SAPPER_BOMB}).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_sab),
@@ -463,12 +484,12 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("stood in cannon fire").setIds({MECHANIC_SAB_CANNON}).setBoss(&boss_sab),
 		//Mechanic().setName("touched the flame wall").setIds({MECHANIC_SAB_FLAMEWALL}).setBoss(&boss_sab),
 
-		//Slothasaur
-		Mechanic().setName("was hit with tantrum").setIds({MECHANIC_SLOTH_TANTRUM}).setBoss(&boss_sloth),
-		Mechanic().setName("got a bomb").setIds({MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000).setBoss(&boss_sloth),
-		Mechanic().setName("stood in bomb aoe").setIds({MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(verbosity_chart).setBoss(&boss_sloth),
+		//Slothasor
+		Mechanic().setName("was hit with tantrum").setDescription("Slothasor creates 3 AoEs under every player which deals damage and knockdown for 5 seconds.").setIds({MECHANIC_SLOTH_TANTRUM}).setBoss(&boss_sloth),
+		Mechanic().setName("was targeted by Volatile Poison").setDescription("An special poison which deals 750 damage per tick and after short time or by pressing the special action key purge leaves a Volatile Poison pool behind").setIds({MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000).setBoss(&boss_sloth),
+		Mechanic().setName("stood in Volatile Poison AoE").setDescription("An slowly expanding AoE which deals massive damage to anyone standing in it. Grows to 900 units and disappears after short time").setIds({MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(verbosity_chart).setBoss(&boss_sloth),
 		Mechanic().setName("was hit by flame breath").setIds({MECHANIC_SLOTH_FLAME_BREATH}).setBoss(&boss_sloth),
-		Mechanic().setName("was hit by shake").setIds({MECHANIC_SLOTH_SHAKE}).setBoss(&boss_sloth),
+		Mechanic().setName("was hit by shake").setDescription("Spore Release from which each projectile applies 5 stacks of Torment, Poison, Bleeding and Burning each.").setIds({MECHANIC_SLOTH_SHAKE}).setBoss(&boss_sloth),
 		Mechanic().setName("is fixated").setIds({MECHANIC_SLOTH_FIXATE}).setFailIfHit(false).setBoss(&boss_sloth),
 
 		//Bandit Trio
@@ -533,77 +554,77 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic("CCed a tormented dead",{872,833,31465},&boss_sh,true,true,verbosity_all,false,true,target_location_src,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementShTdCc,valueDefault,"Stun, Daze, Temporal stasis",""),
 
 		//Statues
-		Mechanic().setName("was puked on").setIds({MECHANIC_EATER_PUKE}).setFrequencyPlayer(3000).setVerbosity(verbosity_chart).setBoss(&boss_soul_eater),
+		Mechanic().setName("was puked on").setDescription("Hungering Miasma is a cone shaped lingering aoe from Soul Eater which poison and cripples").setIds({MECHANIC_EATER_PUKE}).setFrequencyPlayer(3000).setVerbosity(verbosity_chart).setBoss(&boss_soul_eater),
 		Mechanic().setName("stood in web").setIds({MECHANIC_EATER_WEB}).setFrequencyPlayer(3000).setVerbosity(verbosity_chart).setBoss(&boss_soul_eater),
-		Mechanic().setName("got an orb").setIds({MECHANIC_EATER_ORB}).setFrequencyPlayer(ms_per_tick).setFailIfHit(false).setBoss(&boss_soul_eater),
-		Mechanic().setName("threw an orb").setNameInternal("Reclaimed Energy").setIds({47942}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_soul_eater),
-		Mechanic("got a green",{47013},&boss_ice_king,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Hailstorm",""),
+		Mechanic().setName("got an orb").setDescription("5 Orbs are needed for charging a domino.").setIds({MECHANIC_EATER_ORB}).setFrequencyPlayer(ms_per_tick).setFailIfHit(false).setBoss(&boss_soul_eater),
+		Mechanic().setName("threw an orb").setDescription("Player who had an orb and threw it.").setNameInternal("Reclaimed Energy").setIds({47942}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_soul_eater),
+		Mechanic("got a green",{47013},&boss_ice_king,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Hailstorm","Count how many green a player collected. None collected greens explode and does party wide damage."),
 		Mechanic("CCed an eye",{872},&boss_cave,false,true,verbosity_all,false,false,target_location_src,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementCaveEyeCc,valueDefault,"Stun",""),
 
 		//Dhuum
-		Mechanic().setName("touched a messenger").setIds({MECHANIC_DHUUM_GOLEM}).setBoss(&boss_dhuum),
-		Mechanic().setName("is shackled").setIds({MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setTargetIsDst(false).setBoss(&boss_dhuum),
-		Mechanic().setName("is shackled").setIds({MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setBoss(&boss_dhuum),
+		Mechanic().setName("touched a messenger").setDescription("Took damage from the messenger Golem.").setIds({MECHANIC_DHUUM_GOLEM}).setBoss(&boss_dhuum),
+		Mechanic().setName("is shackled").setDescription("See other Shackled description. The skill is the same just this time it was cast from the player not Dhuum. This is so both are linked together").setIds({MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setTargetIsDst(false).setBoss(&boss_dhuum),
+		Mechanic().setName("is shackled").setDescription("Dhuum Soul Shackle the two closet player that are not the tank are linked together with shackle. which continuously deal heavy damage to both player after 4 seconds. Players need to be 1200 units apart to break the shackle and remove it.").setIds({MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setBoss(&boss_dhuum),
 		//Mechanic().setName("popped shackles").setIds({MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setIsBuffremove(CBTB_MANUAL).setTargetIsDst(false).setSpecialValue(valueDhuumShackles).setBoss(&boss_dhuum),
 		//Mechanic().setName("popped shackles").setIds({MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setIsBuffremove(CBTB_MANUAL).setSpecialValue(valueDhuumShackles).setBoss(&boss_dhuum),
-		Mechanic().setName("has affliction").setIds({MECHANIC_DHUUM_AFFLICTION}).setFrequencyPlayer(13000 + ms_per_tick).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_dhuum),
-		Mechanic("took affliction damage",{48121},&boss_dhuum,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Arcing Affliction",""),
-		Mechanic().setName("stood in a crack").setIds({MECHANIC_DHUUM_CRACK}).setBoss(&boss_dhuum),
-		Mechanic().setName("stood in a poison mark").setIds({MECHANIC_DHUUM_MARK}).setVerbosity(verbosity_chart).setBoss(&boss_dhuum),
-		Mechanic().setName("was sucked center").setIds({MECHANIC_DHUUM_SUCK_AOE}).setBoss(&boss_dhuum),
-		Mechanic().setName("stood in dip aoe").setIds({MECHANIC_DHUUM_TELEPORT_AOE}).setBoss(&boss_dhuum),
+		Mechanic().setName("has affliction").setDescription("Arcing Affliction is a bomb on one player that needs to be carry out of the group. After 13 Seconds or pressing the Special Action key it explodes and dealing damage to other players depending on their distance from the bomb person.").setIds({MECHANIC_DHUUM_AFFLICTION}).setFrequencyPlayer(13000 + ms_per_tick).setFailIfHit(false).setValidIfDown(true).setBoss(&boss_dhuum),
+		Mechanic("took affliction damage",{48121},&boss_dhuum,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Arcing Affliction","Player got hit from the Arcing Affliction explosion"),
+		Mechanic().setName("stood in a crack").setDescription("Dhuum creates a rippling fracture in the ground, which erupts after short time doing damage and fearing players caught in it.").setIds({MECHANIC_DHUUM_CRACK}).setBoss(&boss_dhuum),
+		Mechanic().setName("stood in a poison mark").setDescription("Dhuum Autoattack creates putridbombs around him, these small to large aoe circle do damage and poison player hit by it.").setIds({MECHANIC_DHUUM_MARK}).setVerbosity(verbosity_chart).setBoss(&boss_dhuum),
+		Mechanic().setName("was sucked center").setDescription("After doing greater Death Mark Dhuum will continuosely suck Player towards the center where a heavy damage AoE was created.").setIds({MECHANIC_DHUUM_SUCK_AOE}).setBoss(&boss_dhuum),
+		Mechanic().setName("stood in dip aoe").setDescription("Dhuum slams his scythe on the ground, creating a soul-shattering explosion and leaving a deadly ring of Dhuumfire. Ripped the Souls from player on initial impact.").setIds({MECHANIC_DHUUM_TELEPORT_AOE}).setBoss(&boss_dhuum),
 		//Mechanic().setName("died on green").setIds({MECHANIC_DHUUM_GREEN_TIMER}).setIsBuffremove(CBTB_MANUAL).setOverstackValue(0).setBoss(&boss_dhuum),
 		//Mechanic().setName("aggroed a messenger").setNameInternal("").setTargetIsDst(false).setFailIfHit(false).setFrequencyPlayer(0).setValidIfDown(true).setBoss(&boss_dhuum).setSpecialRequirement(requirementDhuumMessenger),
-		Mechanic().setName("was snatched").setIds({MECHANIC_DHUUM_SNATCH}).setSpecialRequirement(requirementDhuumSnatch).setBoss(&boss_dhuum),
+		Mechanic().setName("was snatched").setDescription("Was picked up from Ender's Echo the CM only Mechanic of Dhuum.").setIds({MECHANIC_DHUUM_SNATCH}).setSpecialRequirement(requirementDhuumSnatch).setBoss(&boss_dhuum),
 		//Mechanic().setName("canceled button channel").setIds({MECHANIC_DHUUM_BUTTON_CHANNEL}).setIsActivation(ACTV_CANCEL_CANCEL).setBoss(&boss_dhuum),
-		Mechanic().setName("stood in cone").setIds({MECHANIC_DHUUM_CONE}).setBoss(&boss_dhuum),
+		Mechanic().setName("stood in cone").setDescription("Slash is a cone shaped attack that slowly pulls in everyone caught, stripping their boons and dealing damage. The orange cone show the area which damage and boon steal is applied, the pull is larger and pulls player from a 1200 unit range.").setIds({MECHANIC_DHUUM_CONE}).setBoss(&boss_dhuum),
 
 		//Conjured Amalgamate
-		Mechanic().setName("was squashed").setIds({MECHANIC_AMAL_SQUASH}).setIsInterupt(true).setBoss(&boss_ca),
+		Mechanic().setName("was squashed").setDescription("Was hit from Pulverize of Conjured Amalgamate Arm, dealing damage and knocking down.").setIds({MECHANIC_AMAL_SQUASH}).setIsInterupt(true).setBoss(&boss_ca),
 		Mechanic().setName("used a sword").setNameInternal("Conjured Greatsword").setIds({52325}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_ca),
 		Mechanic().setName("used a shield").setNameInternal("Conjured Protection").setIds({52780}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_ca),
 
 		//Twin Largos Assasins
-		Mechanic().setName("was shockwaved").setIds({MECHANIC_LARGOS_SHOCKWAVE}).setIsInterupt(true).setBoss(&boss_largos),
-		Mechanic().setName("was waterlogged").setIds({MECHANIC_LARGOS_WATERLOGGED}).setVerbosity(verbosity_chart).setValidIfDown(true).setFrequencyPlayer(1).setBoss(&boss_largos),
-		Mechanic().setName("was bubbled").setIds({MECHANIC_LARGOS_BUBBLE}).setBoss(&boss_largos),
-		Mechanic().setName("has a tidal pool").setIds({MECHANIC_LARGOS_TIDAL_POOL}).setFailIfHit(false).setBoss(&boss_largos),
-		Mechanic().setName("stood in geyser").setIds({MECHANIC_LARGOS_GEYSER}).setBoss(&boss_largos),
-		Mechanic().setName("was dashed over").setIds({MECHANIC_LARGOS_DASH}).setBoss(&boss_largos),
-		Mechanic().setName("had boons stolen").setIds({MECHANIC_LARGOS_BOON_RIP}).setBoss(&boss_largos),
-		Mechanic().setName("stood in whirlpool").setIds({MECHANIC_LARGOS_WHIRLPOOL}).setBoss(&boss_largos),
+		Mechanic().setName("was shockwaved").setDescription("Kenut channels a shockwave from her launching players hit and gaining protection for each foe struck.").setIds({MECHANIC_LARGOS_SHOCKWAVE}).setIsInterupt(true).setBoss(&boss_largos),
+		Mechanic().setName("was waterlogged").setDescription("Gain the Waterlogged Debuff at 10 stacks player take rapid intense damage until defeated.").setIds({MECHANIC_LARGOS_WATERLOGGED}).setVerbosity(verbosity_chart).setValidIfDown(true).setFrequencyPlayer(1).setBoss(&boss_largos),
+		Mechanic().setName("was bubbled").setDescription("Player was hit by Aquatic Detainment, A bubble of conjured water surrounds its foe and lifts them into the air. When the bubble reaches maximum height, it bursts and drops the foe to the ground.").setIds({MECHANIC_LARGOS_BUBBLE}).setBoss(&boss_largos),
+		Mechanic().setName("has a tidal pool").setDescription("Tidal Pool is a magically expanding pool of water sommoned at a player's last known location.").setIds({MECHANIC_LARGOS_TIDAL_POOL}).setFailIfHit(false).setBoss(&boss_largos),
+		Mechanic().setName("stood in geyser").setDescription("Geysire a large orange AoE from Nikare, launching player back when hit.").setIds({MECHANIC_LARGOS_GEYSER}).setBoss(&boss_largos),
+		Mechanic().setName("was dashed over").setDescription("Nikare dashes 3 times, first two towards the currently furthest from Nikkare and 3rd towards the current tank. Dealing heavy damage and Chilling and Slowing Players hit.").setIds({MECHANIC_LARGOS_DASH}).setBoss(&boss_largos),
+		Mechanic().setName("had boons stolen").setDescription("Kenut stealths and after 2 sek teleport to the farthest away from her, attempting to steal the boons. Boon steal is an rectangular aoe in front of her and steal boon from ever foe hit.").setIds({MECHANIC_LARGOS_BOON_RIP}).setBoss(&boss_largos),
+		Mechanic().setName("stood in whirlpool").setDescription("Aquatic Vortexes are 3 roaming vortexes which inflicts damage, chills, slow and the waterlogged debuff.").setIds({MECHANIC_LARGOS_WHIRLPOOL}).setBoss(&boss_largos),
 
 		//Qadim
-		Mechanic().setName("was shockwaved").setIds({MECHANIC_QADIM_SHOCKWAVE_A,MECHANIC_QADIM_SHOCKWAVE_B}).setBoss(&boss_qadim),
-		Mechanic().setName("stood in arcing fire").setIds({MECHANIC_QADIM_ARCING_FIRE_A,MECHANIC_QADIM_ARCING_FIRE_B,MECHANIC_QADIM_ARCING_FIRE_C}).setVerbosity(verbosity_chart).setBoss(&boss_qadim),
+		Mechanic().setName("was shockwaved").setDescription("Qadim sent out forth a wave of flame that knocks back foes and deal damage.").setIds({MECHANIC_QADIM_SHOCKWAVE_A,MECHANIC_QADIM_SHOCKWAVE_B}).setBoss(&boss_qadim),
+		Mechanic().setName("stood in arcing fire").setDescription("Qadim summons forth heavily damaging fire along all nearby platform lines.").setIds({MECHANIC_QADIM_ARCING_FIRE_A,MECHANIC_QADIM_ARCING_FIRE_B,MECHANIC_QADIM_ARCING_FIRE_C}).setVerbosity(verbosity_chart).setBoss(&boss_qadim),
 		//Mechanic().setName("stood in giant fireball").setIds({MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_A,MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_B,MECHANIC_QADIM_BOUNCING_FIREBALL_BIG_C}).setBoss(&boss_qadim),
-		Mechanic().setName("was teleported").setIds({MECHANIC_QADIM_TELEPORT}).setBoss(&boss_qadim).setValidIfDown(true),
-		Mechanic().setName("stood in hitbox").setNameInternal("Sea of Flame").setIds({52461}).setBoss(&boss_qadim),
+		Mechanic().setName("was teleported").setDescription("Qadim teleports foes between two columns of flame. Teleport which happen during add phases.").setIds({MECHANIC_QADIM_TELEPORT}).setBoss(&boss_qadim).setValidIfDown(true),
+		Mechanic().setName("stood in hitbox").setNameInternal("Qadim hitbox as an always damaging field called Sea of Flame").setIds({52461}).setBoss(&boss_qadim),
 
 		//Adina
-		Mechanic("was blinded",{56593},&boss_adina,false,false,verbosity_chart,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Radiant Blindness",""),
-		Mechanic("looked at eye", {56114}, &boss_adina, false, false, verbosity_all, false, true, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE,true, false, true,requirementDefault, valueDefault, "Diamond Palisade", ""),
-		Mechanic("touched pillar ripple",{56558},&boss_adina,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Tectonic Upheaval",""),
-		Mechanic("touched a mine",{56141},&boss_adina,true,false,verbosity_all,false,true,target_location_dst,1000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Stalagmites",""),
+		Mechanic("was blinded",{56593},&boss_adina,false,false,verbosity_chart,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Radiant Blindness","It is an uncleansable blind causing all attacks to miss for its duration which can stack, applied upon failing certain mechanics while Adina casts Tectonic Upheaval, Diamond Palisade and Boulder Barrage, or when falling into the quicksand under the arena."),
+		Mechanic("looked at eye", {56114}, &boss_adina, false, false, verbosity_all, false, true, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE,true, false, true,requirementDefault, valueDefault, "Diamond Palisade", "Looked towards the boss during Diamond Palisade and got blinded."),
+		Mechanic("touched pillar ripple",{56558},&boss_adina,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Tectonic Upheaval","Got hit from the wave of a spawning pillar."),
+		Mechanic("touched a mine",{56141},&boss_adina,true,false,verbosity_all,false,true,target_location_dst,1000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Stalagmites","Touched and explode a Stalagmite. Dealing heavy damage and deleting a floor tile."),
 		//Mechanic("has pillar",{47860},&boss_adina,false,false,verbosity_all,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"",""),//wrong id?
 		
 		//Sabir
-		Mechanic("touched big tornado",{56202},&boss_sabir,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Dire Drafts",""),
-		Mechanic("was shockwaved",{56643},&boss_sabir,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,true,requirementDefault,valueDefault,"Unbridled Tempest",""),
-		Mechanic("wasn't in bubble",{56372},&boss_sabir,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Fury of the Storm",""),
-		Mechanic("was bopped at phase", {56094},&boss_sabir,true,false,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Walloping Wind",""),
+		Mechanic("touched big tornado",{56202},&boss_sabir,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Dire Drafts","Touched Tornado with orange AoE, lifting the plyer up into the air and cause rapid damage until they die."),
+		Mechanic("was shockwaved",{56643},&boss_sabir,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,true,requirementDefault,valueDefault,"Unbridled Tempest","An expanding wave of violent electricity that deals lethal damage."),
+		Mechanic("wasn't in bubble",{56372},&boss_sabir,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Fury of the Storm","Powerful lightning bolts bombard those outside of the marked two white bubbles safe spot."),
+		Mechanic("was bopped at phase", {56094},&boss_sabir,true,false,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Walloping Wind","At Phase transition at 80% and 60%, Sabir knocks back and deal damage."),
 
 		//Qadim the Peerless
 		Mechanic("is tank",{56510},&boss_qadim2,false,true,verbosity_all,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Fixated",""),
-		Mechanic("touched lava", {56180,56378,56541},&boss_qadim2,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Residual Impact, Pylon Debris Field",""),//ids are big,small(CM),pylon
-		Mechanic("was struck by small lightning",{56656},&boss_qadim2,true,false,verbosity_chart,false,false,target_location_dst,1000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Brandstorm Lightning",""),		
-		Mechanic("was hit by triple lightning",{56527},&boss_qadim2,true,false,verbosity_all,false,false,target_location_dst,1000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Rain of Chaos",""),
-		Mechanic("touched arcing line",{56145},&boss_qadim2,true,false,verbosity_all,false,false,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Chaos Called",""),
-		Mechanic("was shockwaved",{56134},&boss_qadim2,true,false,verbosity_all,true,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Force of Retaliation",""),
-		Mechanic("touched purple rectangle",{56441},&boss_qadim2,true,false,verbosity_chart,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Force of Havoc",""),
-		Mechanic("was ran over",{56616},&boss_qadim2,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Battering Blitz",""),
-		Mechanic("was sniped",{56332},&boss_qadim2,true,true,verbosity_all,false,false,target_location_dst,100,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Caustic Chaos",""),
-		Mechanic("was splashed by sniper",{56543},&boss_qadim2,false,true,verbosity_chart,false,false,target_location_dst,100,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Caustic Chaos",""),
+		Mechanic("touched lava", {56180,56378,56541},&boss_qadim2,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Residual Impact, Pylon Debris Field","Player stoud in the lava field from either big, small or pylon AoEs."),//ids are big,small(CM),pylon
+		Mechanic("was struck by small lightning",{56656},&boss_qadim2,true,false,verbosity_chart,false,false,target_location_dst,1000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Brandstorm Lightning","Player was hit by Brandstorm Lightning, which are small orange AoE lightning field dealing great damage."),		
+		Mechanic("was hit by triple lightning",{56527},&boss_qadim2,true,false,verbosity_all,false,false,target_location_dst,1000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Rain of Chaos"," Triple lightning AoE attack. Three lightning strikes of expanding sizes will target the player's location and damage anyone in their area of effect. In CM player hit by it spawn small lava field at their location for several seconds."),
+		Mechanic("touched arcing line",{56145},&boss_qadim2,true,false,verbosity_all,false,false,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Chaos Called","Chaos Called are damaging energy along specific surfaces."),
+		Mechanic("was shockwaved",{56134},&boss_qadim2,true,false,verbosity_all,true,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Force of Retaliation","After cc all pylons, Qadim cast Force of Retaliation, indicated by an expanding orange circle, knocking everyone hit back."),
+		Mechanic("touched purple rectangle",{56441},&boss_qadim2,true,false,verbosity_chart,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Force of Havoc","Force of Havoc are the purple rectangle Qadim spawns in his AutoAttack Chain. Standing in them deals extremely heavy damage."),
+		Mechanic("was ran over",{56616},&boss_qadim2,true,false,verbosity_all,false,true,target_location_dst,2000,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Battering Blitz","At phase transition at 40%,30% and 20% Qadim dashes towards a pylon damaging everyone caught in his path."),
+		Mechanic("was sniped",{56332},&boss_qadim2,true,true,verbosity_all,false,false,target_location_dst,100,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Caustic Chaos","Qadim cast Caustic Chaos which is a 3 times steadily fired projectile along the arrow shaped AoE. And when hit, does AoE damage and applies Chaos Corrosion, which increases damage of the next hit, to all hit targets."),
+		Mechanic("was splashed by sniper",{56543},&boss_qadim2,false,true,verbosity_chart,false,false,target_location_dst,100,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Caustic Chaos","Was splashed from the hit of the Arrow Shaped AoE Caustic Chaos."),
 		//Mechanic("has lightning", {51371},&boss_qadim2,false,true,verbosity_all,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"",""),
 
 		//Fractals of the Mist Instabilities
@@ -702,35 +723,35 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic("soaked damage", {60545}, &boss_coldwar, false, false, verbosity_all, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Lethal Coalescence", ""),
 
 		//Mai Trin
-		Mechanic().setName("hit by cone attack").setIds({65749}).setBoss(&boss_mai_trin),
-		Mechanic().setName("hit by side cone attack").setIds({66089}).setBoss(&boss_mai_trin),
-		Mechanic().setName("hit by shockwave attack").setIds({65031, 67866}).setBoss(&boss_mai_trin),
-		Mechanic().setName("stood in puddle").setIds({64044, 67832}).setBoss(&boss_mai_trin),
-		Mechanic().setName("hit by yellow circle").setIds({66568}).setBoss(&boss_mai_trin),
+		Mechanic().setName("hit by cone attack").setDescription("Nightmare Fusillade in first phase is a cone shaped aoe from mai trin, which inflicts 3 Stacks of Torment and in cm also inflicts 1 stack of exposed.").setIds({65749}).setBoss(&boss_mai_trin),
+		Mechanic().setName("hit by side cone attack").setDescription("Nightmare Fusillade in der second phase is a cone shaped aoe from the side, which inflicts 3 Stacks of Torment and in cm also inflicts 1 stack of exposed.").setIds({66089}).setBoss(&boss_mai_trin),
+		Mechanic().setName("hit by shockwave attack").setDescription("She raises her arms then slam the ground in an area which does damage, unleashing a tormenting wave that inflicts Torment. In CM the impact area instakills and the wave also applies one exposed stack.").setIds({65031, 67866}).setBoss(&boss_mai_trin),
+		Mechanic().setName("stood in puddle").setDescription("AoE Field left behind from Ley Breach (Blue Laser)").setIds({64044, 67832}).setBoss(&boss_mai_trin),
+		Mechanic().setName("hit by yellow circle").setDescription("Was hit by Kaleidoscopic Chaos a orange circle which explodes after a delay, dealing unavoidable damage.").setIds({66568}).setBoss(&boss_mai_trin), //Look if need change in how it counted.
 		Mechanic().setName("received Exposed stack").setIds({64936}).setSpecialRequirement(requirementSpecificBoss).setBoss(&boss_mai_trin),
-		Mechanic().setName("was selected for green").setFailIfHit(false).setIds({65900, 67831}).setBoss(&boss_mai_trin),
-		Mechanic().setName("received green debuff").setFailIfHit(false).setIds({67872}).setBoss(&boss_mai_trin),
-		Mechanic().setName("downed by green").setIds({67954}).setBoss(&boss_mai_trin),
-		Mechanic().setName("selected for bomb").setFailIfHit(false).setIds({67856}).setBoss(&boss_mai_trin),
+		Mechanic().setName("was selected for green").setDescription("Got Focused Destruction Green").setFailIfHit(false).setIds({65900, 67831}).setBoss(&boss_mai_trin),
+		Mechanic().setName("received green debuff").setDescription("Stood in Focused Destruction (Green) and got Photon Saturation Debuff").setFailIfHit(false).setIds({67872}).setBoss(&boss_mai_trin),
+		Mechanic().setName("downed by green").setDescription("Stood in  Focused Destruction (Green) with an Photon Saturation Debuff and died").setIds({67954}).setBoss(&boss_mai_trin),
+		Mechanic().setName("selected for bomb").setDescription("Two players are targeted with a X-shape AoE, need to be placed one the surviving two bombs with special action, without overlapping on the safety spot of the group.").setFailIfHit(false).setIds({67856}).setBoss(&boss_mai_trin),
 
 		//Ankka
-		Mechanic().setName("hit by hands AoE").setIds({66246}).setBoss(&boss_ankka),
-		Mechanic().setName("hit by pull AoE").setIds({67160}).setBoss(&boss_ankka),
-		Mechanic().setName("hit by in between sections AoE").setIds({66728}).setBoss(&boss_ankka),
-		Mechanic().setName("hit by Kraits").setIds({66824}).setBoss(&boss_ankka),
-		Mechanic().setName("hit by Quaggan Explosion").setIds({64669}).setBoss(&boss_ankka),
+		Mechanic().setName("hit by hands AoE").setDescription("Grasping Horror AoEs which inflict poison and torment.").setIds({66246}).setBoss(&boss_ankka),
+		Mechanic().setName("hit by pull AoE").setDescription("Death Embrace is a pull from Ankka which pull player toward her into those AoE").setIds({67160}).setBoss(&boss_ankka),
+		Mechanic().setName("hit by in between sections AoE").setDescription("Death's Hand which spawn in between phase on the walk to the next arena, applying torment and poison").setIds({66728}).setBoss(&boss_ankka),
+		Mechanic().setName("hit by Kraits").setDescription("Wall of Fear are hallucination Krait surrounded by an AoE and spawn on one end of the arena and move straight towards to the other side, continuosusly Pulling in nearby players.").setIds({66824}).setBoss(&boss_ankka),
+		Mechanic().setName("hit by Quaggan Explosion").setDescription("Wave of Torment are hallucination Quaggan orange circle AoEs which spawns on random players which explodes after a delay, dealing unavoidable damage").setIds({64669}).setBoss(&boss_ankka),
 
 		//Minister Li
-		Mechanic().setName("hit by wave").setIds({64952, 67825}).setBoss(&boss_minister_li),
-		Mechanic().setName("hit by burst").setIds({66465, 65378}).setBoss(&boss_minister_li),
-		Mechanic().setName("hit by rush").setIds({66090, 64619, 67824, 67943}).setBoss(&boss_minister_li),
-		Mechanic().setName("got bomb").setIds({64277, 67982}).setBoss(&boss_minister_li),
-		Mechanic().setName("was selected for green").setIds({64300, 68004}).setBoss(&boss_minister_li),
-		Mechanic().setName("stood in flames").setIds({65608, 68028}).setBoss(&boss_minister_li),
-		Mechanic().setName("overlapped red circles").setIds({65243}).setBoss(&boss_minister_li),
-		Mechanic().setName("was fixated").setIds({66140}).setSpecialRequirement(requirementSpecificBoss).setBoss(&boss_minister_li),
-		Mechanic().setName("hit by bladestorm").setIds({63838, 63550, 65569}).setBoss(&boss_minister_li),
-		Mechanic().setName("hit by big laser").setIds({64016}).setBoss(&boss_minister_li),
+		Mechanic().setName("knocked back by wave").setIsInterupt(true).setDescription("Dragon Slash-Wave, Minister Li swings his blade in a cone-shaped wave attack that deals significant damage and launches back").setIds({64952, 67825}).setBoss(&boss_minister_li),
+		Mechanic().setName("hit by burst").setDescription("Targets three (five in cm) with numbers going of in order. This attack is a slash and area of effect explosion players hit by either will be affected by Extreme Vulnerability. Getting hit twice will deal extreme damage and often downstate. In CM Number player also leave behind a pulsing lethal damage field.").setIds({66465, 65378}).setBoss(&boss_minister_li),
+		Mechanic().setName("hit by rush").setDescription("Dragon Slash-Rush is performed by Minister Li, he faces a direction then dashes forwards. This attack hit for a total of five times in quick succession.").setIds({66090, 64619, 67824, 67943}).setBoss(&boss_minister_li),
+		Mechanic().setName("got bomb").setDescription("Targeted Expulsion are orange circles which appear under players and explode. Deals 33% max health if hit by one. More then one hit downs the player.").setIds({64277, 67982}).setBoss(&boss_minister_li),
+		Mechanic().setName("was selected for green").setDescription("Shared Destruction are green circle which need to be shared dealing less damage for each player that stood within the circle. In CM at least three players need to be in green or").setIds({64300, 68004}).setBoss(&boss_minister_li),
+		Mechanic().setName("stood in flames").setDescription("Rushing Justice are trails of fire from dashes of the Enforcer forming an hourglass pattern, dealing damage and in cm applying Infirmity").setIds({65608, 68028}).setBoss(&boss_minister_li),
+		Mechanic().setName("overlapped red circles").setDescription("Booming Command from the Enforcer.").setIds({65243}).setBoss(&boss_minister_li),
+		Mechanic().setName("was fixated").setDescription("Fixated from either Enforcer or Mindblade").setIds({66140}).setSpecialRequirement(requirementSpecificBoss).setBoss(&boss_minister_li),
+		Mechanic().setName("hit by bladestorm").setDescription("Either three or six storms of swords travel outwars from the boss, dealing heavy damage, applying Torment and in cm applying Infirmity").setIds({63838, 63550, 65569}).setBoss(&boss_minister_li), 
+		Mechanic().setName("hit by big laser").setDescription("Jade Buster Cannon is a large aoe laser dealing heavy damage standing in it.").setIds({64016}).setBoss(&boss_minister_li), //Look if player Frequency is right.
 		Mechanic().setName("received Debilitated stack").setIds({67972}).setSpecialRequirement(requirementSpecificBoss).setBoss(&boss_minister_li),
 		Mechanic().setName("received Infirmity stack").setIds({67965}).setSpecialRequirement(requirementSpecificBoss).setBoss(&boss_minister_li),
 		Mechanic().setName("received Exposed stack").setIds({64936}).setSpecialRequirement(requirementSpecificBoss).setBoss(&boss_minister_li),
@@ -739,29 +760,27 @@ std::vector<Mechanic>& getMechanics()
 		//Harvest Temple
 		Mechanic().setName("received Void debuff").setIds({64524}).setBoss(&boss_the_dragonvoid),
 		Mechanic().setName("hit by Void").setIds({66566}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Jormag breath").setIds({65517, 66216, 67607}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Primordus Slam").setIds({64527}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Crystal Barrage").setIds({66790}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Kralkatorrik Beam").setIds({65017}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Modremoth Shockwave").setIds({64810}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Zhaitan Scream").setIds({66658}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Whirlpool").setIds({65252}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Soo-Won Tsunami").setIds({64748, 66489}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("hit by Soo-Won Claw").setIds({63588}).setBoss(&boss_the_dragonvoid),
-		Mechanic().setName("was revealed").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Jormag breath").setDescription("Rays of ice streak the platform dealing low damage and chills player hit.").setIds({65517, 66216, 67607}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Primordus Slam").setDescription("Lava Slam which deals massive damage often downstate player.").setIds({64527}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Crystal Barrage").setDescription("Launched Crystal which deal heavy damage and knockback").setIds({66790}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Kralkatorrik Beam").setDescription("Branding Beam are wide beams that pulse heavy damage. Alternates between 2 patterns: One laser down the center, Two lasers total down the sides").setIds({65017}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Modremoth Shockwave").setDescription("Shockwave which knockback and deal heavy damage on hit.").setIds({64810}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Zhaitan Scream").setDescription("Scream that inflicts heavy damage and  Fear.").setIds({66658}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Whirlpool").setDescription("Summoned from Void Saltspray Dragon, knockbacks players").setIds({65252}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Soo-Won Tsunami").setDescription("Wave which knocks back from tail or from a claw").setIds({64748, 66489}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("hit by Soo-Won Claw").setDescription("Swipe which knockdown and deal heavy damage. Follows-up with orbs bouncing out to the platform edge").setIds({63588}).setBoss(&boss_the_dragonvoid),
+		Mechanic().setName("was revealed").setDescription("Enemies stop running towards the boss center when a player is revealed.").setFailIfHit(false).setIds({890}).setSpecialRequirement(requirementOnSelfRevealedInHarvestTemple).setBoss(&boss_the_dragonvoid),
 
 		//Cerus
-		Mechanic().setName("hit by Envious Gaze (Wall A)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze (Wall B)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze (Wall C)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
-		Mechanic().setName("hit by Envious Gaze (Wall D)").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by empowered Envious Gaze").setDescription("Empowered Wall of Cerus or Embodiment of Envy").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_A, MECHANIC_CERUS_ENVIOUS_GAZE_C}).setBoss(&boss_cerus),
+		Mechanic().setName("hit by Envious Gaze").setDescription("Normal Wall of Cerus or Embodiment of Envy").setIds({MECHANIC_CERUS_ENVIOUS_GAZE_B, MECHANIC_CERUS_ENVIOUS_GAZE_D}).setBoss(&boss_cerus),
 		Mechanic().setName("Orb collected").setIds({72351, 72348, 72261, 72344, 69544, 70031, 70880, 70091, 70792, 70503, 69538, 70384, 70385}).setFailIfHit(false).setFrequencyPlayer(200).setBoss(&boss_cerus),
 
 		//Dagda
-		Mechanic().setName("got targeted by Soul Feast").setIds({BUFF_REVEALED}).setSpecialRequirement(requirementFromBoss).setBoss(&boss_dagda),
-		Mechanic().setName("got targeted by Charging Constellation (Numbers)").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
-		Mechanic().setName("hit by Demonic Blast (Cone AoE)").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
-		Mechanic().setName(("got targeted by Shared Destruction (Meteor Crash Green AoE)")).setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Soul Feast").setSpecialRequirement(requirementRevealedFromDagda).setDescription("Following aoe players standing in moving Soul Feast are inflicted with Infirmity and Residual Anxiety").setIds({BUFF_REVEALED}).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Charging Constellation").setDescription("Also known as Numbers, oversight of the people target by 1-5 Number").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
+		Mechanic().setName("hit by Demonic Blast").setDescription("Also known as Pizza/Cones, a eight cone-shaped AoEs which radiate from Dagda, getting hit applies Debilitate and Residual Anxiety").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
+		Mechanic().setName("targeted by Meteor Crash").setDescription("Green Aoes where at least 3 Players need to be present. Skill and damage from it is called Meteor Crash, but game maps it ingame to Shared Destruction").setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
 		
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
