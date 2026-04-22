@@ -83,7 +83,7 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
     ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiCond_FirstUseEver);
     ImGui::Begin(title, p_open, flags);
 
-    const float window_width = ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x;
+    const float window_width = ImGui::GetContentRegionAvail().x;
 	int current_mechanic_fail_count = 0;//number of mechanics for a given player given current filter settings
 	int current_mechanic_neutral_count = 0;
 
