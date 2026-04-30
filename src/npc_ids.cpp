@@ -197,39 +197,6 @@ Boss boss_kela_seneschal_of_waves = Boss()
 										  	27670
 										  });
 
-Boss boss_dagda = Boss()
-						.setName("Dagda")
-						.setIds({
-							//Dagda
-							25705,
-							//Veteran Tormented Phantom
-							25604,
-							//Champion The Tormented
-							25623,
-							//Elite The Tormented
-							26000,
-							//The Tormented
-							26016,
-							//Soul Feast
-							26069,
-						});
-
-//VoE Raid Encounter
-Boss boss_kela_seneschal_of_waves = Boss()
-										  .setName("Kela, Seneschal of Waves")
-										  .setIds({
-										  	//Kela
-										  	27124,
-											//Crocodilian Razortooth
-										  	27655, 27658, 27667,
-										  	//Tornado
-										  	27654,
-										  	//Executor of Waves
-										  	27651,
-										  	//Kela
-										  	27670
-										  });
-
 std::list<Boss*> bosses =
 {
 	&boss_generic,

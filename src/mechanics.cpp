@@ -781,7 +781,8 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("targeted by Charging Constellation").setDescription("Also known as Numbers, oversight of the people target by 1-5 Number").setFailIfHit(false).setIds({MECHANIC_DAGDA_TARGET_ORDER_1, MECHANIC_DAGDA_TARGET_ORDER_2, MECHANIC_DAGDA_TARGET_ORDER_3, MECHANIC_DAGDA_TARGET_ORDER_4, MECHANIC_DAGDA_TARGET_ORDER_5}).setBoss(&boss_dagda),
 		Mechanic().setName("hit by Demonic Blast").setDescription("Also known as Pizza/Cones, a eight cone-shaped AoEs which radiate from Dagda, getting hit applies Debilitate and Residual Anxiety").setIds({MECHANIC_DAGDA_DEMONIC_BLAST}).setBoss(&boss_dagda),
 		Mechanic().setName("targeted by Meteor Crash").setDescription("Green Aoes where at least 3 Players need to be present. Skill and damage from it is called Meteor Crash, but game maps it ingame to Shared Destruction").setFailIfHit(false).setIds({MECHANIC_DAGDA_SHARED_DESTRUCTION}).setBoss(&boss_dagda),
-		
+		//Mechanic().setName("Lost Control").setDescription("Player had 10 Stacks of Residual Anixety, was unfriendly and lost control").setIds({MECHANIC_DAGDA_RESIDUAL_ANXIETY}).setBoss(&boss_dagda), //TODO Look into buffs.
+
 		//Greer
 		Mechanic().setName("hit by Wave of Corruption").setIds({ MECHANIC_GREER_WAVE_OF_CORRUPTION_A}).setBoss(&boss_greer),
 		Mechanic().setName("was targeted by Blob of Blight").setTargetIsDst(true).setFrequencyPlayer(1000).setFailIfHit(false).setDescription("Fokus Target of an orb").setIds({ BUFF_TARGET }).setBoss(&boss_greer),
@@ -795,11 +796,6 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("was hit from Chorus of Thunder more then once").setDescription("Also called orange AoEs. Getting hit from it more then once often downstate you and gives an exposed stack in challenge mode").setFrequencyPlayer(10000).setIsMultihit(false).setIds({MECHANIC_DECIMA_CHORUS_OF_THUNDER_A, MECHANIC_DECIMA_CHORUS_OF_THUNDER_B, MECHANIC_DECIMA_CHORUS_OF_THUNDER_C}).setSpecialRequirement(requirementDecimaExposedChorusOfThunder).setValidIfDown(true).setBoss(&boss_decima),
 		Mechanic().setName("was knocked back").setDescription("Decima Seismic Crash knocks back if not dodged or negated with aegis or stability").setIsInterupt(true).setIds({MECHANIC_DECIMA_SEISMIC_CRASH_A, MECHANIC_DECIMA_SEISMIC_CRASH_B}).setBoss(&boss_decima),
 		
-		//Decima
-		Mechanic().setName( "got exposed buff").setIds({MECHANIC_DECIMA_EXPOSED, 75523}).setBoss(&boss_decima),
-		Mechanic().setName( "Fluxance").setIds({75155, 75450, 75854}).setBoss(&boss_decima),
-		//Mechanic().setName( "Fulisade").setIds({75954}).setBoss(&boss_decima),
-		
 		//Ura
 		Mechanic().setName("picked up bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_DETERRENCE }).setBoss(&boss_ura),
 		Mechanic().setName("used bloodstone").setFailIfHit(false).setIds({ MECHANIC_URA_BLOODSTONE_SATURATION }).setBoss(&boss_ura),
@@ -812,7 +808,7 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("got first Biting Swarm").setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got Biting Swarm").setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got knocked down by Tackle").setSpecialRequirement(requirementSpecificBoss).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked down by Tackle").setSpecialRequirement(requirementSpecificBoss).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
