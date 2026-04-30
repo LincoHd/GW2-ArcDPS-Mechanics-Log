@@ -448,6 +448,10 @@ void parseIni()
 		
 		current_mechanic->setVerbosity(std::stoi(pszValue));
 	}
+
+	pszValue = mechanics_ini.GetValue("chart", "clear_chart", "0");
+	tracker.clear_chart = std::stoi(pszValue);
+	
 	has_read_ini = true;
 }
 
@@ -472,7 +476,7 @@ void writeIni()
 
 	}
 
-	//TODO: ADD CLEAR CHART.
+	rc = mechanics_ini.SetValue("chart", "clear_chart", std::to_string(tracker.clear_chart).c_str());
 
 	rc = mechanics_ini.SaveFile("addons\\arcdps\\arcdps_mechanics.ini");
 }
