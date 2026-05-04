@@ -8,6 +8,7 @@
     <LocalDebuggerEnvironment>APPDATA="D:\Guild Wars 2\debug_data\appdata"
 TMP="D:\Guild Wars 2\debug_data\tmp"
 USERPROFILE="D:\Guild Wars 2"</LocalDebuggerEnvironment>
+    <LocalDebuggerCommandArgumentsHistory>-autologin|</LocalDebuggerCommandArgumentsHistory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LocalDebuggerCommand>D:\Guild Wars 2\Gw2-64.exe</LocalDebuggerCommand>
@@ -17,5 +18,6 @@ USERPROFILE="D:\Guild Wars 2"</LocalDebuggerEnvironment>
     <LocalDebuggerEnvironment>APPDATA="D:\Guild Wars 2\debug_data\appdata"
 TMP="D:\Guild Wars 2\debug_data\tmp"
 USERPROFILE="D:\Guild Wars 2"</LocalDebuggerEnvironment>
+    <LocalDebuggerCommandArgumentsHistory>-autologin|</LocalDebuggerCommandArgumentsHistory>
   </PropertyGroup>
 </Project>
