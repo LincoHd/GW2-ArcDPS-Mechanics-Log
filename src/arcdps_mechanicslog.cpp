@@ -255,6 +255,35 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 			case CBTS_LOGNPCUPDATE:
 				tracker.processLogNpcUpdate(ev->src_agent);
 				break;
+			case CBTS_BUFFAPPLY:
+				if (ev->skillid==BUFF_STABILITY)//if it's stability
+				{
+					if(current_entry = tracker.getPlayerEntry(dst))
+					{
+						current_entry->setStabTime(ev->time+ev->value+ms_per_tick);//add prediction of when new stab will end
+					}
+				}
+				break;
+			case CBTS_BUFFREMOVE_SINGLE:
+				if (ev->skillid==BUFF_STABILITY)//if it's stability
+				{
+					if(current_entry = tracker.getPlayerEntry(dst))
+					{
+					
+
+						current_entry->setStabTime(ev->time+ms_per_tick);//cut the ending time of stab early
+					}
+				}
+				else if (ev->skillid==BUFF_VAPOR_FORM//vapor form manual case
+						 || ev->skillid==BUFF_ILLUSION_OF_LIFE//Illusion of Life manual case
+						 )
+				{
+					if(current_entry = tracker.getPlayerEntry(dst))
+					{
+						current_entry->fixDoubleDown();
+					}
+				}
+				break;
 			}
 		}
 
@@ -267,35 +296,13 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 		/* buff remove */
 		else if (ev->is_buffremove)
 		{
-			if (ev->skillid==BUFF_STABILITY)//if it's stability
-			{
-				if(current_entry = tracker.getPlayerEntry(dst))
-				{
-					current_entry->setStabTime(ev->time+ms_per_tick);//cut the ending time of stab early
-				}
-			}
-			else if (ev->skillid==BUFF_VAPOR_FORM//vapor form manual case
-					 || ev->skillid==BUFF_ILLUSION_OF_LIFE//Illusion of Life manual case
-					 )
-			{
-				if(current_entry = tracker.getPlayerEntry(dst))
-				{
-					current_entry->fixDoubleDown();
-				}
-			}
 
 		}
 
 		/* buff */
 		else if (ev->buff)
 		{
-			if (ev->skillid==BUFF_STABILITY)//if it's stability
-			{
-				if(current_entry = tracker.getPlayerEntry(dst))
-				{
-					current_entry->setStabTime(ev->time+ev->value+ms_per_tick);//add prediction of when new stab will end
-				}
-			}
+
 		}
 
 		if(ev->result != CBTR_INTERRUPT && ev->result != CBTR_BLIND)
