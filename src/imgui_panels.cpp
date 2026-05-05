@@ -66,7 +66,7 @@ void AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Track
     }
 
     if (scroll_to_bottom)
-        ImGui::SetScrollHere(1.0f);
+        ImGui::SetScrollHereY(1.0f);
 	scroll_to_bottom = false;
     ImGui::EndChild();
     ImGui::End();
@@ -83,7 +83,7 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
     ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiCond_FirstUseEver);
     ImGui::Begin(title, p_open, flags);
 
-    const float window_width = ImGui::GetWindowContentRegionWidth();
+    const float window_width = ImGui::GetContentRegionAvail().x;
 	int current_mechanic_fail_count = 0;//number of mechanics for a given player given current filter settings
 	int current_mechanic_neutral_count = 0;
 
