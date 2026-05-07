@@ -223,6 +223,12 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - target numbers
   - demonic blast
   - green target
+- Kela
+  - sclading wave
+  - tornado cc
+  - biting swarm
+  . lightning strike cc
+  - tackle
 - Icebrood Construct
   - Ice Arm Swing
   - Ice Shatter (Ice Orbs)
