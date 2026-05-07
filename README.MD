@@ -12,7 +12,7 @@ Here are some example screenshots (with names redacted):
 ![chart](https://i.imgur.com/dcP57iR.png)
 
 # Known Issues:
-- Clearing the mechanics chart breaks the chart https://github.com/MerlinAesalon/GW2-ArcDPS-Mechanics-Log/issues/4
+- ~~Clearing the mechanics chart breaks the chart https://github.com/MerlinAesalon/GW2-ArcDPS-Mechanics-Log/issues/4~~ Clearing Chart reset stats now, doesnt remove players not in squad.
 - Sunqua Peak Fractal mechanics are not complete, some are still missing.
 
 Since i updated to a new imgui version, some graphic glitches could occur (overlapping text/elements also count). Please report them, so i can fix them.
@@ -130,10 +130,17 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - purple rectangle
 - Greer, the Blightbringer
   - wave of corruption
-  - blob of blight
+  - blob of blight hit and targeted.
+  - ripples of rot (jump)
+  - cage of decay (arrows)
+- Decima, the Stormsinger
+  - double hit from fluxance
+  - double hit from chorus of thunder
+  - seismic crash (jump knockback)
 - Ura, the Steamshrieker
   - sharding
-  - hit by shockwave of sulfuric geysire
+  - hit by sulfuric geysire wave
+  - hit by eruption vent wave
 
 ### Fractals of the Mists
 - flux bombs
@@ -164,6 +171,58 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
     - Firestorm
       
 ### Strike Missions
+- Mai Trin
+  - cone attack
+  - side cone attack
+  - shockwave attack
+  - stood in puddle
+  - yellow circle
+  - exposed buff
+  - green target
+  - green debuff
+  - green
+  - bomb
+- Ankka
+  - hands Aoe
+  - pull Aoe
+  - sections Aoe
+  - Kraits
+  - Quaggans
+- Minister Li
+  - knock back wave
+  - burst
+  - rush
+  - bomb
+  - green target
+  - flames
+  - red circles overlapped hit
+  - fixated
+  - bladestorm
+  - big laser
+  - debilitated stack
+  - infirmity stack
+  - exposed stack
+- Harvest Temple
+  - void debuff
+  - jormag breath
+  - primordus slam
+  - crystal barrage
+  - kralkatorrik beam
+  - modremoth shockwave
+  - zhaitan scream
+  - whirlpool
+  - soo-won tsunami
+  - soo-won claw
+  - revealed
+- Cerus
+  - hit by wall
+  - hit by double wall
+  - orb collection
+- Dagda
+  - target soul feast
+  - target numbers
+  - demonic blast
+  - green target
 - Icebrood Construct
   - Ice Arm Swing
   - Ice Shatter (Ice Orbs)
@@ -198,6 +257,7 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - Flame Wall
   - Charge! (knockdown)
   - Detonate
+
 
 If you have any ideas for things I’m missing, please let me know.
 
@@ -278,6 +338,16 @@ Send bug reports, feedback, hate mail, etc in a new issue here or join the [Elit
 - [KA] Karma and Omg Its Kayla.6479 for testing, feedback, and encouragement
 
 # Changelog:
+    Mai 7 2026
+        Added Soto strike mechanics
+        Added Kela Encounter (VoE)
+        Added W8 mechanics
+        Added Descriptions to Raids, EoD, VoE, Soto
+        Fix for pulls not showing in mechanic chart
+        Clear Chart button now doesn't break mechanic chart and reset stats.
+    Febuary 12 2o23
+        Fixed settings for "new" arcdps options design - thanks DeltaxHunter
+        Added new EoD strike mechanics -thanks cheahjs
     February 22 2021
         Added support for ImGui 1.80
     September 21 2020
