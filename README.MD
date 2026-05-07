@@ -14,6 +14,7 @@ Here are some example screenshots (with names redacted):
 # Known Issues:
 - ~~Clearing the mechanics chart breaks the chart https://github.com/MerlinAesalon/GW2-ArcDPS-Mechanics-Log/issues/4~~ Clearing Chart reset stats now, doesnt remove players not in squad.
 - Sunqua Peak Fractal mechanics are not complete, some are still missing.
+- Kela Biting Swarm (Bees) wont work on first pull.
 
 Since i updated to a new imgui version, some graphic glitches could occur (overlapping text/elements also count). Please report them, so i can fix them.
 
