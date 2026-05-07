@@ -334,9 +334,15 @@ A: Yes. I’ve talked to Chris Cleary from Anet and he did not see any issues wi
 
 # Known Issues:
 
-If a player has a magnetic aura, reflecting distortion, etc and reflects a shard on Matthias, it will say the player with the buff reflected and not the player that granted the buff.
+### General
+- The chart will track downs/deaths of players in open-world PvE / WvW squads. This can get spammy. For now, I recommend clearing the chart before starting instanced content to avoid the clutter.
 
-The chart will track downs/deaths of players in open-world PvE / WvW squads. This can get spammy. For now, I recommend clearing the chart before starting instanced content to avoid the clutter.
+### Mathias
+- If a player has a magnetic aura, reflecting distortion, etc and reflects a shard on Matthias, it will say the player with the buff reflected and not the player that granted the buff.
+
+### Kela - Biting swarm(Bees)
+- It wont work on the first pull after game start.
+- First biting swarm and biting swarm is not shown in detail on the chart. It counts all instances together and either says it is first biting swarm or biting swarm.
 
 Send bug reports, feedback, hate mail, etc in a new issue here or join the [Elite Insights discord](https://discord.gg/dCDEPXx) and write in the channel #mechanics-log.
 
