@@ -227,7 +227,7 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - sclading wave
   - tornado cc
   - biting swarm
-  . lightning strike cc
+  - lightning strike cc
   - tackle
 - Icebrood Construct
   - Ice Arm Swing
