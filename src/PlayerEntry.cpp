@@ -19,9 +19,9 @@ void PlayerEntry::addMechanicEntry(uint64_t new_time, Mechanic * new_mechanic, B
 	}
 
 	last_hit_time = new_time;
-
-	auto it = std::find(entries.begin(), entries.end(), new_mechanic->ids[0]);
-
+	
+	auto it = (new_mechanic->is_double_used) ? std::find(entries.begin(), entries.end(), new_mechanic->name) : std::find(entries.begin(), entries.end(), new_mechanic->ids[0]); 
+	
 	//mechanic not tracked yet
 	if (it == entries.end())
 	{
