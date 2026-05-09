@@ -92,7 +92,8 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 
 	if (ev->is_buffremove != is_buffremove)
 	{
-		return false;
+		if (!is_combat_buff) return false;
+		if (this->boss->pulls != 0) return false;
 	}
 
 	if (is_activation)
@@ -389,7 +390,6 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 
 bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
-	if (ev->is_buffremove) return false;
 	static KelaBees* kela_bees = nullptr;
 	if (!ev) return false;
 	//First Bees ever
@@ -815,8 +815,8 @@ std::vector<Mechanic>& getMechanics()
 		//Kela
 		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got first Biting Swarm").setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setValidIfDown(true).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(30000).setCanEvade(false).setCanInvuln(false).setCanBlock(false).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got Biting Swarm").setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setValidIfDown(true).setIds({MECHANIC_KELA_BITING_SWARM_A}).setCanInvuln(false).setCanBlock(false).setCanEvade(false).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got first Biting Swarm").setIsDoubleUsed(true).setIsCombatBuff(true).setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setValidIfDown(true).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(30000).setCanEvade(false).setCanInvuln(false).setCanBlock(false).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm").setIsDoubleUsed(true).setIsCombatBuff(true).setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setValidIfDown(true).setIds({MECHANIC_KELA_BITING_SWARM_A}).setCanInvuln(false).setCanBlock(false).setCanEvade(false).setFrequencyPlayer(30000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked down by Tackle").setValidIfDown(true).setSpecialRequirement(requirementKnockdownFromCroc).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
