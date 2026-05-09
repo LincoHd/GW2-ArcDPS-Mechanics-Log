@@ -61,8 +61,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,0,0,0
- PRODUCTVERSION 3,0,0,0
+ FILEVERSION 3,0,1,0
+ PRODUCTVERSION 3,0,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -78,11 +78,11 @@ BEGIN
         BLOCK "200004b0"
         BEGIN
             VALUE "CompanyName", "Zinn-o-Matics"
-            VALUE "FileVersion", "3.0.0.0"
+            VALUE "FileVersion", "3.0.1.0"
             VALUE "InternalName", "d3d9_arcdps_mechanics.dll"
             VALUE "LegalCopyright", "Copyright (C) 2023"
             VALUE "OriginalFilename", "d3d9_arcdps_mechanics.dll"
-            VALUE "ProductVersion", "3.0.0.0"
+            VALUE "ProductVersion", "3.0.1.0"
         END
     END
     BLOCK "VarFileInfo"
