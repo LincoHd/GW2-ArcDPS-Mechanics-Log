@@ -93,7 +93,6 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 	if (ev->is_buffremove != is_buffremove)
 	{
 		if (!is_combat_buff) return false;
-		if (this->boss->pulls != 0) return false;
 	}
 
 	if (is_activation)
