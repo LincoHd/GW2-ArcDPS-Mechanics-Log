@@ -27,6 +27,7 @@ struct PlayerEntry
 	void addPull(Boss* new_boss);
 	int getMechanicsTotal();
 	uint64_t getLastMechanicHitTime(uint32_t new_mechanic);
+	uint64_t getLastMechanicHitTimeWithName(std::string new_mechanic_name);
 
 	void down();
 	void dead();

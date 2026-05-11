@@ -59,6 +59,18 @@ int PlayerEntry::getMechanicsTotal()
 	return result;
 }
 
+uint64_t PlayerEntry::getLastMechanicHitTimeWithName(std::string new_mechanic_name)
+{
+	for (auto current_entry = entries.begin(); current_entry != entries.end(); ++current_entry)
+	{
+		if (current_entry->mechanic->name == new_mechanic_name)
+		{
+			return current_entry->last_hit_time;
+		}
+	}
+	return 0;
+}
+
 uint64_t PlayerEntry::getLastMechanicHitTime(uint32_t new_mechanic)
 {
 	for (auto current_entry = entries.begin(); current_entry != entries.end(); ++current_entry)
