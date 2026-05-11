@@ -391,6 +391,10 @@ bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag*
 {
 	static KelaBees* kela_bees = nullptr;
 	if (!ev) return false;
+	if (current_mechanic.is_combat_buff)
+	{
+		if (ev->value < 29000) return false;
+	}
 	//First Bees ever
 	if (!kela_bees)
 	{
