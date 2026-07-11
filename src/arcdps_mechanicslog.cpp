@@ -255,6 +255,35 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 			case CBTS_LOGNPCUPDATE:
 				tracker.processLogNpcUpdate(ev->src_agent);
 				break;
+			case CBTS_BUFFAPPLY:
+				if (ev->skillid==BUFF_STABILITY)//if it's stability
+				{
+					if(current_entry = tracker.getPlayerEntry(dst))
+					{
+						current_entry->setStabTime(ev->time+ev->value+ms_per_tick);//add prediction of when new stab will end
+					}
+				}
+				break;
+			case CBTS_BUFFREMOVE_SINGLE:
+				if (ev->skillid==BUFF_STABILITY)//if it's stability
+				{
+					if(current_entry = tracker.getPlayerEntry(dst))
+					{
+					
+
+						current_entry->setStabTime(ev->time+ms_per_tick);//cut the ending time of stab early
+					}
+				}
+				else if (ev->skillid==BUFF_VAPOR_FORM//vapor form manual case
+						 || ev->skillid==BUFF_ILLUSION_OF_LIFE//Illusion of Life manual case
+						 )
+				{
+					if(current_entry = tracker.getPlayerEntry(dst))
+					{
+						current_entry->fixDoubleDown();
+					}
+				}
+				break;
 			}
 		}
 
@@ -267,35 +296,13 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 		/* buff remove */
 		else if (ev->is_buffremove)
 		{
-			if (ev->skillid==BUFF_STABILITY)//if it's stability
-			{
-				if(current_entry = tracker.getPlayerEntry(dst))
-				{
-					current_entry->setStabTime(ev->time+ms_per_tick);//cut the ending time of stab early
-				}
-			}
-			else if (ev->skillid==BUFF_VAPOR_FORM//vapor form manual case
-					 || ev->skillid==BUFF_ILLUSION_OF_LIFE//Illusion of Life manual case
-					 )
-			{
-				if(current_entry = tracker.getPlayerEntry(dst))
-				{
-					current_entry->fixDoubleDown();
-				}
-			}
 
 		}
 
 		/* buff */
 		else if (ev->buff)
 		{
-			if (ev->skillid==BUFF_STABILITY)//if it's stability
-			{
-				if(current_entry = tracker.getPlayerEntry(dst))
-				{
-					current_entry->setStabTime(ev->time+ev->value+ms_per_tick);//add prediction of when new stab will end
-				}
-			}
+
 		}
 
 		if(ev->result != CBTR_INTERRUPT && ev->result != CBTR_BLIND)
@@ -303,13 +310,17 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 			int64_t value = 0;
 			current_entry = tracker.getPlayerEntry(src);
 			PlayerEntry* other_entry = tracker.getPlayerEntry(dst);
-			for(uint16_t index=0;index<getMechanics().size();index++)
+			for (auto& mechanic : getMechanics())
 			{
-				if(value = getMechanics()[index].isValidHit(ev, src, dst,
+				if (value = mechanic.isValidHit(ev, src, dst,
 					(current_entry ? current_entry->player : nullptr), //check for null before getting player object
 					(other_entry ? other_entry->player: nullptr)))
 				{
-					tracker.processMechanic(ev, current_entry, other_entry, &getMechanics()[index], value);
+					if (mechanic.is_combat_buff && ev->is_statechange == CBTS_BUFFAPPLY)
+					{
+						mechanic.is_combat_buff = false;
+					}
+					tracker.processMechanic(ev, current_entry, other_entry, &mechanic, value);
 					log_ui.scroll_to_bottom = true;
 				}
 			}

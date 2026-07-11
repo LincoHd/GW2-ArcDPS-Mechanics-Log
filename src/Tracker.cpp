@@ -270,8 +270,10 @@ void Tracker::processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, P
 
 	if (!relevant_entry) return;
 
-	if (new_mechanic->is_multihit && ev->time < (relevant_entry->getLastMechanicHitTime(new_mechanic->ids[0]) + new_mechanic->frequency_player)) return;
-		
+	if (new_mechanic->is_multihit && ev->time < (new_mechanic->is_double_used ? relevant_entry->getLastMechanicHitTime( new_mechanic->name)  : relevant_entry->getLastMechanicHitTime(new_mechanic->ids[0])) + new_mechanic->frequency_player)
+	{
+		return;
+	}
 	std::lock_guard<std::mutex> lg2(log_events_mtx);
 		
 	log_events.push_back(LogEvent(relevant_entry->player, new_mechanic, getElapsedTime(ev->time), ev->time, value, ev));

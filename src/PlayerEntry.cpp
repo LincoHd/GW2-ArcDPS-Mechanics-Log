@@ -19,9 +19,9 @@ void PlayerEntry::addMechanicEntry(uint64_t new_time, Mechanic * new_mechanic, B
 	}
 
 	last_hit_time = new_time;
-
-	auto it = std::find(entries.begin(), entries.end(), new_mechanic->ids[0]);
-
+	
+	auto it = (new_mechanic->is_double_used) ? std::find(entries.begin(), entries.end(), new_mechanic->name) : std::find(entries.begin(), entries.end(), new_mechanic->ids[0]); 
+	
 	//mechanic not tracked yet
 	if (it == entries.end())
 	{
@@ -59,14 +59,22 @@ int PlayerEntry::getMechanicsTotal()
 	return result;
 }
 
+uint64_t PlayerEntry::getLastMechanicHitTime(std::string_view  new_mechanic_name)
+{
+	auto current_entry = std::find(entries.begin(), entries.end(), new_mechanic_name);
+	if (current_entry != entries.end())
+	{
+		return current_entry->last_hit_time;
+	}
+	return 0;
+}
+
 uint64_t PlayerEntry::getLastMechanicHitTime(uint32_t new_mechanic)
 {
-	for (auto current_entry = entries.begin(); current_entry != entries.end(); ++current_entry)
+	auto current_entry = std::find(entries.begin(), entries.end(), new_mechanic);
+	if (current_entry != entries.end())
 	{
-		if (current_entry->mechanic->ids[0] == new_mechanic)
-		{
-			return current_entry->last_hit_time;
-		}
+		return current_entry->last_hit_time;
 	}
 	return 0;
 }

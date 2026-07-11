@@ -90,18 +90,18 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 		return false;
 	}
 
-	if (ev->is_buffremove != is_buffremove)
+	if (ev->is_buffremove != is_buffremove && !is_combat_buff)
 	{
 		return false;
 	}
 
 	if (is_activation)
 	{//Normal and quickness activations are interchangable
-		if (is_activation == ACTV_NORMAL
-			|| is_activation == ACTV_QUICKNESS)
+		if (is_activation == ACTV_MINIMUM
+			|| is_activation == ACTV_QUICKNESS_DEFUNC)
 		{
-			if (ev->is_activation != ACTV_NORMAL
-				&& ev->is_activation != ACTV_QUICKNESS)
+			if (ev->is_activation != ACTV_MINIMUM
+				&& ev->is_activation != ACTV_QUICKNESS_DEFUNC)
 			{
 				return false;
 			}
@@ -389,18 +389,20 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 
 bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
-	static KelaBees kela_bees;
-	std::string mechanic_name = "Bee Second";
-	if (!ev) return false;
-	//First Bees ever
-	if (kela_bees.first_touch_time == 0)
+	static uint64_t kela_bee_first_touch_time = ev->time;
+	if (!ev || ev->is_statechange == CBTS_BUFFREMOVE_SINGLE || ev->is_statechange == CBTS_BUFFREMOVE_ALL)
 	{
-		kela_bees.first_touch_time = ev->time;
+		return false;
+	}
+	
+	if (kela_bee_first_touch_time == ev->time)
+	{
 		return true;
 	}
-	if ((ev->time - kela_bees.first_touch_time) > current_mechanic.frequency_player) 
+	
+	if ((ev->time - kela_bee_first_touch_time) > current_mechanic.frequency_player) 
 	{
-		kela_bees.first_touch_time = ev->time;
+		kela_bee_first_touch_time = ev->time;
 		return true;
 	}
 	return false;
@@ -435,6 +437,13 @@ bool requirementSpecificBoss(const Mechanic& current_mechanic, cbtevent* ev,
 	if (!current_player->current_log_npc) return false;
 	if (!current_mechanic.boss) return false;
 	return current_mechanic.boss->hasId(*current_player->current_log_npc);
+}
+
+bool requirementKnockdownFromCroc(const Mechanic& current_mechanic, cbtevent* ev,
+							 ag* ag_src, ag* ag_dst, Player* player_src,
+							 Player* player_dst, Player* current_player)
+{
+	return requirementSpecificBoss(current_mechanic, ev, ag_src, ag_dst, player_src, player_dst, current_player) && ag_src->prof != 27124;
 }
 
 bool requirementRevealedFromDagda(const Mechanic& current_mechanic, cbtevent* ev,
@@ -493,8 +502,8 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("is fixated").setIds({MECHANIC_SLOTH_FIXATE}).setFailIfHit(false).setBoss(&boss_sloth),
 
 		//Bandit Trio
-		Mechanic("threw a beehive",{34533},&boss_trio,false,false,verbosity_all,false,false,target_location_src,0,0,-1,-1,ACTV_NORMAL,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Beehive",""),
-		Mechanic("threw an oil keg",{34471},&boss_trio,false,false,verbosity_all,false,false,target_location_src,0,0,-1,-1,ACTV_NORMAL,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Throw",""),
+		Mechanic("threw a beehive",{34533},&boss_trio,false,false,verbosity_all,false,false,target_location_src,0,0,-1,-1,ACTV_MINIMUM,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Beehive",""),
+		Mechanic("threw an oil keg",{34471},&boss_trio,false,false,verbosity_all,false,false,target_location_src,0,0,-1,-1,ACTV_MINIMUM,CBTB_NONE,false,false,false,requirementDefault,valueDefault,"Throw",""),
 
 		//Matthias
 		//Mechanic().setName("was hadoukened").setIds({MECHANIC_MATT_HADOUKEN_HUMAN,MECHANIC_MATT_HADOUKEN_ABOM}).setBoss(&boss_matti),
@@ -557,7 +566,7 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("was puked on").setDescription("Hungering Miasma is a cone shaped lingering aoe from Soul Eater which poison and cripples").setIds({MECHANIC_EATER_PUKE}).setFrequencyPlayer(3000).setVerbosity(verbosity_chart).setBoss(&boss_soul_eater),
 		Mechanic().setName("stood in web").setIds({MECHANIC_EATER_WEB}).setFrequencyPlayer(3000).setVerbosity(verbosity_chart).setBoss(&boss_soul_eater),
 		Mechanic().setName("got an orb").setDescription("5 Orbs are needed for charging a domino.").setIds({MECHANIC_EATER_ORB}).setFrequencyPlayer(ms_per_tick).setFailIfHit(false).setBoss(&boss_soul_eater),
-		Mechanic().setName("threw an orb").setDescription("Player who had an orb and threw it.").setNameInternal("Reclaimed Energy").setIds({47942}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_soul_eater),
+		Mechanic().setName("threw an orb").setDescription("Player who had an orb and threw it.").setNameInternal("Reclaimed Energy").setIds({47942}).setTargetIsDst(false).setIsActivation(ACTV_MINIMUM).setFailIfHit(false).setBoss(&boss_soul_eater),
 		Mechanic("got a green",{47013},&boss_ice_king,false,true,verbosity_chart,false,false,target_location_dst,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementDefault,valueDefault,"Hailstorm","Count how many green a player collected. None collected greens explode and does party wide damage."),
 		Mechanic("CCed an eye",{872},&boss_cave,false,true,verbosity_all,false,false,target_location_src,0,0,-1,-1,ACTV_NONE,CBTB_NONE,true,true,true,requirementCaveEyeCc,valueDefault,"Stun",""),
 
@@ -581,8 +590,8 @@ std::vector<Mechanic>& getMechanics()
 
 		//Conjured Amalgamate
 		Mechanic().setName("was squashed").setDescription("Was hit from Pulverize of Conjured Amalgamate Arm, dealing damage and knocking down.").setIds({MECHANIC_AMAL_SQUASH}).setIsInterupt(true).setBoss(&boss_ca),
-		Mechanic().setName("used a sword").setNameInternal("Conjured Greatsword").setIds({52325}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_ca),
-		Mechanic().setName("used a shield").setNameInternal("Conjured Protection").setIds({52780}).setTargetIsDst(false).setIsActivation(ACTV_NORMAL).setFailIfHit(false).setBoss(&boss_ca),
+		Mechanic().setName("used a sword").setNameInternal("Conjured Greatsword").setIds({52325}).setTargetIsDst(false).setIsActivation(ACTV_MINIMUM).setFailIfHit(false).setBoss(&boss_ca),
+		Mechanic().setName("used a shield").setNameInternal("Conjured Protection").setIds({52780}).setTargetIsDst(false).setIsActivation(ACTV_MINIMUM).setFailIfHit(false).setBoss(&boss_ca),
 
 		//Twin Largos Assasins
 		Mechanic().setName("was shockwaved").setDescription("Kenut channels a shockwave from her launching players hit and gaining protection for each foe struck.").setIds({MECHANIC_LARGOS_SHOCKWAVE}).setIsInterupt(true).setBoss(&boss_largos),
@@ -804,10 +813,10 @@ std::vector<Mechanic>& getMechanics()
 		//Kela
 		Mechanic().setName("got hit by Scalding Wave").setIds({MECHANIC_KELA_SCALDING_WAVE}).setValidIfDown(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked up by Tornado").setIds({MECHANIC_KELA_TORNADO}).setValidIfDown(true).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got first Biting Swarm").setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got Biting Swarm").setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setIds({MECHANIC_KELA_BITING_SWARM_A}).setFrequencyPlayer(35000).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got first Biting Swarm").setIsDoubleUsed(true).setIsCombatBuff(true).setDescription("First Person getting Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setValidIfDown(true).setIds({MECHANIC_KELA_BITING_SWARM_A}).setSpecialRequirement(requirementKelaFirstBee).setFrequencyPlayer(32000).setCanEvade(false).setCanInvuln(false).setCanBlock(false).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got Biting Swarm").setIsDoubleUsed(true).setIsCombatBuff(true).setDescription("Shared Biting Swarm, also called Bees. Damage that starts at 2% of the player's health, and increases by 1.5% every stack. Can be shared to reset stack count").setFailIfHit(false).setValidIfDown(true).setIds({MECHANIC_KELA_BITING_SWARM_A}).setCanInvuln(false).setCanBlock(false).setCanEvade(false).setFrequencyPlayer(32000).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
-		Mechanic().setName("got knocked down by Tackle").setSpecialRequirement(requirementSpecificBoss).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
+		Mechanic().setName("got knocked down by Tackle").setValidIfDown(true).setSpecialRequirement(requirementKnockdownFromCroc).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
 	};
 	return *mechanics;
