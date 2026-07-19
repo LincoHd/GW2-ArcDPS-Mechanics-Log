@@ -62,7 +62,7 @@ void LogEvent::bakeStr(int max_display_name_length)
 
 	output += " - ";
 	
-	output += player ? max_display_name_length != 0 ? player->name.substr(0, max_display_name_length) : player->name  : "Unknown Player";
+	output += player ? max_display_name_length != 0 ? ((std::string_view)player->name).substr(0, max_display_name_length) : player->name  : "Unknown Player";
 
 	output += " ";
 	output += mechanic->name;
