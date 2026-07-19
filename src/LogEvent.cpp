@@ -1,8 +1,9 @@
 #include "LogEvent.h"
 
+#include "Tracker.h"
 #include "imgui/imgui.h"
 
-LogEvent::LogEvent(Player* new_player, Mechanic* new_mechanic, uint64_t new_time, uint64_t new_time_absolute, int64_t new_value, const cbtevent* new_ev)
+LogEvent::LogEvent(Player* new_player, Mechanic* new_mechanic, uint64_t new_time, uint64_t new_time_absolute, int64_t new_value, const cbtevent* new_ev, int max_display_name_length)
 {
 	player = new_player;
 	mechanic = new_mechanic;
@@ -12,7 +13,7 @@ LogEvent::LogEvent(Player* new_player, Mechanic* new_mechanic, uint64_t new_time
 	
 	if (new_ev)ev = *new_ev;
 
-	bakeStr();
+	bakeStr(max_display_name_length);
 }
 
 void LogEvent::draw()
@@ -40,7 +41,7 @@ void LogEvent::drawTooltip()
 	ImGui::EndTooltip();
 }
 
-void LogEvent::bakeStr()
+void LogEvent::bakeStr(int max_display_name_length)
 {
 	if (isPlaceholder())
 	{
@@ -62,8 +63,8 @@ void LogEvent::bakeStr()
 	output += std::to_string(abs(time) % 60);
 
 	output += " - ";
-
-	output += player ? player->name : "Unknown Player";
+	
+	output += player ? max_display_name_length != 0 ? player->name.substr(0, max_display_name_length) : player->name  : "Unknown Player";
 
 	output += " ";
 	output += mechanic->name;
