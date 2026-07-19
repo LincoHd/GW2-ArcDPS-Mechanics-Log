@@ -1,6 +1,4 @@
 #include "LogEvent.h"
-
-#include "Tracker.h"
 #include "imgui/imgui.h"
 
 LogEvent::LogEvent(Player* new_player, Mechanic* new_mechanic, uint64_t new_time, uint64_t new_time_absolute, int64_t new_value, const cbtevent* new_ev, int max_display_name_length)
