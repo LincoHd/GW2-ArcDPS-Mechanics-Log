@@ -828,6 +828,7 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Worldpiercer").setIds({MECHANIC_VLOXX_WORLDPIERCER_A, MECHANIC_VLOXX_WORLDPIERCER_B}).setValidIfDown(true).setDescription("Vloxx hurls Ancora in a flat trajectory, indicated by three large red arrows. These red arrow leave behind translucent walls which knockback player attempting to cross them").setBoss(&boss_vloxx),
 		Mechanic().setName("hit by Echoing Blade").setIds({MECHANIC_VLOXX_ECHOING_BLADE}).setVerbosity(verbosity_chart).setDescription("A series of 8 semi-circle attacks in quick succession, starting at one side and turning 45 degrees with each swing. Each swing spawns a spinning sword that will move in slow line.").setBoss(&boss_vloxx),
 		Mechanic().setName("hit by Excision Extremis").setIds({MECHANIC_VLOXX_EXCISION_EXTREMIS_A, MECHANIC_VLOXX_EXCISION_EXTREMIS_B}).setVerbosity(verbosity_chart).setDescription("A series of sword strikes which appear in a pattern around a random target position mirroring Vloxx's initial strikes four times over").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Raging Storm").setIds({MECHANIC_VLOXX_RAGINGSTORM_A, MECHANIC_VLOXX_RAGINGSTORM_B, MECHANIC_VLOXX_RAGINGSTORM_C}).setVerbosity(verbosity_chart).setDescription("A rain of falling spears that slam down on their targets, tracking their movement.").setBoss(&boss_vloxx),
 	};
 	return *mechanics;
 }
