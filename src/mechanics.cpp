@@ -818,6 +818,16 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("got stunned by Lightning Strike").setIds({MECHANIC_KELA_LIGHTNING_STRIKE}).setIsInterupt(true).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("got knocked down by Tackle").setValidIfDown(true).setSpecialRequirement(requirementKnockdownFromCroc).setDescription("Tackle (Jump) from Crocodilian Razortooth, which knockdown and does damage").setIds({BUFF_GENERIC_KNOCKDOWN}).setBoss(&boss_kela_seneschal_of_waves),
 		Mechanic().setName("was fixated from Crocodilian Razortooth").setVerbosity(verbosity_chart).setIds({MECHANIC_KELA_HUNTED}).setBoss(&boss_kela_seneschal_of_waves),
+		
+		//Vloxx
+		Mechanic().setName("hit by Cosmic Charge").setIds({MECHANIC_VLOXX_COSMIC_CHARGE_A, MECHANIC_VLOXX_COSMIC_CHARGE_B, MECHANIC_VLOXX_COSMIC_CHARGE_C }).setDescription("Charge indicated by an orange arrow. Foes hit by the spear receive dama and conditions, those directly in its path are thrown back as well. Leaves behind a trail of energy puddles that damage and inflicts conditions.").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Annihilating Orb").setIds({MECHANIC_VLOXX_ANNIHILATING_ORB_A, MECHANIC_VLOXX_ANNIHILATING_ORB_B}).setDescription("An orb of unstable energy that slowly travels to a target point, damaging all in its path, followed by an shockwave from its target point.").setBoss(&boss_vloxx),
+		Mechanic().setName("was knocked down by Annihilating Orb Shockwave").setIsInterupt(true).setIds({MECHANIC_VLOXX_ANNIHILATING_ORB_SCHOCKWAVE}).setDescription("Shockwave from the Annihilating Orb which knockdown when hit.").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Slice Through Reality").setIds({MECHANIC_VLOXX_SLICE_THROUGH_REALITY}).setDescription("Vloxx teleports and connects two locations with short-lived portals. Entry pulls you in and inflicting damage and corrupting boons.").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Thousand Strikes").setIds({MECHANIC_VLOXX_THOUSAND_STRIKES_A, MECHANIC_VLOXX_THOUSAND_STRIKES_B}).setVerbosity(verbosity_chart).setDescription("A large, wide-angled orange cone in which he attacks with a flurry of quick Spear stabs.").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Worldpiercer").setIds({MECHANIC_VLOXX_WORLDPIERCER_A, MECHANIC_VLOXX_WORLDPIERCER_B}).setValidIfDown(true).setDescription("Vloxx hurls Ancora in a flat trajectory, indicated by three large red arrows. These red arrow leave behind translucent walls which knockback player attempting to cross them").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Echoing Blade").setIds({MECHANIC_VLOXX_ECHOING_BLADE}).setVerbosity(verbosity_chart).setDescription("A series of 8 semi-circle attacks in quick succession, starting at one side and turning 45 degrees with each swing. Each swing spawns a spinning sword that will move in slow line.").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Excision Extremis").setIds({MECHANIC_VLOXX_EXCISION_EXTREMIS_A, MECHANIC_VLOXX_EXCISION_EXTREMIS_B}).setVerbosity(verbosity_chart).setDescription("A series of sword strikes which appear in a pattern around a random target position mirroring Vloxx's initial strikes four times over").setBoss(&boss_vloxx),
 	};
 	return *mechanics;
 }
