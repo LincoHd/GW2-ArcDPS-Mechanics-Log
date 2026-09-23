@@ -830,7 +830,7 @@ std::vector<Mechanic>& getMechanics()
 		Mechanic().setName("hit by Excision Extremis").setIds({MECHANIC_VLOXX_EXCISION_EXTREMIS_A, MECHANIC_VLOXX_EXCISION_EXTREMIS_B}).setVerbosity(verbosity_chart).setDescription("A series of sword strikes which appear in a pattern around a random target position mirroring Vloxx's initial strikes four times over").setBoss(&boss_vloxx),
 		Mechanic().setName("hit by Raging Storm").setIds({MECHANIC_VLOXX_RAGINGSTORM_A, MECHANIC_VLOXX_RAGINGSTORM_B, MECHANIC_VLOXX_RAGINGSTORM_C}).setVerbosity(verbosity_chart).setDescription("A rain of falling spears that slam down on their targets, tracking their movement.").setBoss(&boss_vloxx),
 		Mechanic().setName("float up by Visions of Eternity").setIds({MECHANIC_VLOXX_VISIONS_OF_ETERNITY_A, MECHANIC_VLOXX_VISIONS_OF_ETERNITY_B, MECHANIC_VLOXX_VISIONS_OF_ETERNITY_C}).setIsInterupt(true).setDescription("Orange AoE during split phase which floats player").setBoss(&boss_vloxx),
-		Mechanic().setName("float up by Visions of Eternity").setIds({MECHANIC_VLOXX_PROBABILITY_DISTRIBUTION}).setDescription("A curse on 3 targests, placing a timed warning in form of a orange filling circle on them. When filled does damage, remove boons and leave behind a puddle for a short time-").setBoss(&boss_vloxx),
+		Mechanic().setName("hit by Probability Distribution").setIds({MECHANIC_VLOXX_PROBABILITY_DISTRIBUTION}).setDescription("A curse on 3 targests, placing a timed warning in form of a orange filling circle on them. When filled does damage, remove boons and leave behind a puddle for a short time-").setBoss(&boss_vloxx),
 	};
 	return *mechanics;
 }
