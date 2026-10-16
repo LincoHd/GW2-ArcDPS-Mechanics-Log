@@ -206,6 +206,8 @@ Boss boss_vloxx = Boss()
 							28017,
 							//Champion Aspect of the Spear
 							28033,
+							//Champion Aspect of the Sword
+							28107,
 							//Cosmic Bulwark
 							27934,
 							//Cosmic Piercer
@@ -213,7 +215,11 @@ Boss boss_vloxx = Boss()
 							//Something Cosmic Piercer
 							28056,
 							//Cosmic Sunderer
-							27933
+							27933,
+							//Elite Cosmic Piercer
+							27929,
+							//Elite Cosmic Bullwark
+							28065
 						});
 
 std::list<Boss*> bosses =
