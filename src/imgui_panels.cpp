@@ -1,6 +1,6 @@
 
 #include "imgui_panels.h"
-
+#define NOMINMAX
 #include <Windows.h>
 #include <ctime>
 #include <fstream>
@@ -290,7 +290,7 @@ void AppOptions::draw(Tracker* tracker)
 		
 		if (ImGui::InputInt("Max display name length", &tracker->max_display_name_length, 1))
 		{
-			tracker->max_display_name_length = max (tracker->max_display_name_length, -1);
+			tracker->max_display_name_length = std::max(tracker->max_display_name_length, -1);
 		}
 
 		ImGui::Checkbox("Export chart to CSV when game is closed", &tracker->export_chart_on_close);
